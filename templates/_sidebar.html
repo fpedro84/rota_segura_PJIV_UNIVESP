@@ -1,0 +1,26 @@
+<aside class="sidebar">
+    <div class="logo">
+        <div class="logo-icon"><i class="bi bi-shield-fill-check"></i></div>
+        <div><strong>Rota <span>Segura</span></strong><small>Rotas mais seguras, decisões melhores</small></div>
+    </div>
+
+    <div class="menu">
+        <nav>
+            <a href="/" class="{{ 'active' if ativo=='inicio' }}"><i class="bi bi-house-fill"></i><span>Início</span></a>
+            <a href="/rota" class="{{ 'active' if ativo=='rota' }}"><i class="bi bi-signpost-split"></i><span>Planejador de Rotas</span></a>
+            <a href="/painel" class="{{ 'active' if ativo=='painel' }}"><i class="bi bi-shield-exclamation"></i><span>Análise de Acidentes</span></a>
+        </nav>
+    </div>
+
+    <div class="data-box">
+        <strong><span class="dot"></span>Dados Públicos PRF</strong>
+        <small>{{ s.ini }} a {{ s.fim }}</small>
+        <small>{{ s.registros }} acidentes</small>
+        <div class="connected">Dados carregados</div>
+    </div>
+
+    <div class="sidebar-footer">
+        Route Segura v1.0.0<br><br>
+        Projeto Integrador IV Univesp, &nbsp; | &nbsp; Dados Públicos &nbsp; | &nbsp; PRF e ANTT
+    </div>
+</aside>

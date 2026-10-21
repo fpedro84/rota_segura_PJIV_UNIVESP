@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rota Segura | Painel de Análise de Risco</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='routesafe.css') }}">
+<style>
+:root{--card:#fff;--ink:#102d55;--mut:#66809f;--line:#e5edf6;--border:#e5edf6;--navy:#9cc3f3;--teal:#1677f2;--red:#e5484d;--amb:#f5a623;--grn:#20b978;--map:#f1f6fc;--road:#b8c7da}
+.content{font-size:14px;line-height:1.4}
+.page-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.page-head h1{margin:0 0 4px;font-size:30px;font-weight:750;letter-spacing:-1.2px}h2{margin:0 0 2px;font-size:15px;font-weight:700}
+.sub{color:var(--mut);font-size:12px}
+.badge{background:#eaf3ff;color:#0873ed;font-weight:700;font-size:11px;padding:9px 16px;border-radius:12px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.f{background:#fff;border:1px solid var(--border);border-radius:12px;padding:8px 12px;flex:1;min-width:130px}
+.f label{display:block;font-size:10px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+.f select{width:100%;border:0;background:transparent;color:var(--ink);font:inherit;font-size:14px;outline:0}
+button{border:1px solid #d5e2f0;border-radius:12px;padding:0 24px;font:inherit;font-weight:700;cursor:pointer;background:#fff;color:#315273;min-height:44px;transition:.2s}button:hover{border-color:var(--teal);color:var(--teal)}
+.grid{display:grid;gap:14px;margin-bottom:14px}
+.k{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.kpi{background:#fff;border:1px solid var(--border);border-left:5px solid;border-radius:14px;padding:12px 16px}
+.kpi b{display:block;font-size:26px;margin:2px 0}.kpi span{font-size:10px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;min-width:0}
+.r1{grid-template-columns:2fr 1fr}.r2{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:1100px){.r2{grid-template-columns:1fr 1fr}}
+@media(max-width:860px){.r1,.r2{grid-template-columns:1fr}}
+svg{width:100%;height:auto;display:block}
+text{fill:var(--mut);font-size:10px}
+.row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
+.row:last-child{border:0}.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.tag{margin-left:auto;font-weight:700;font-size:12px}
+footer{font-size:12px;color:var(--mut);padding:4px 0 16px}
+.note{background:#fff;border:1px solid var(--border);border-radius:10px;padding:8px 12px;display:inline-block}
+.up{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}.mdl{font-size:12px;color:var(--mut);flex:1;min-width:220px}
+.rt{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:10px 0}
+.ro{border:1px solid var(--border);background:#f9fbfe;border-radius:13px;padding:12px}.ro b{display:block;margin-bottom:4px}
+.leg{display:flex;gap:12px;font-size:11px;color:var(--mut);justify-content:flex-end}
+</style>
+</head>
+<body>
+{% set ativo = 'painel' %}
+{% include '_sidebar.html' %}
+
+<main class="main">
+<header class="topbar">
+  <div class="page-title"><i class="bi bi-shield-fill-exclamation"></i> Análise de Acidentes</div>
+  <div class="region"><i class="bi bi-geo-alt-fill me-1"></i> Todo o Brasil</div>
+</header>
+<div class="content">
+  <div class="page-head">
+    <div><h1>Painel de Análise de Risco Rodoviário</h1><div class="sub">Visão geral dos acidentes em rodovias federais, Projeto Integrador UNIVESP</div></div>
+    <div class="badge" id="bdg">DADOS PRF</div>
+  </div>
+  <div class="up"><div class="mdl" id="mdl">Carregando dados…</div></div>
+  <div class="filters">
+    <div class="f"><label>Região</label><select id="reg"><option value="">Todo o Brasil</option><option>Norte</option><option>Nordeste</option><option>Centro-Oeste</option><option>Sudeste</option><option>Sul</option></select></div>
+    <div class="f"><label>UF</label><select id="uf"></select></div>
+    <div class="f"><label>Rodovia</label><select id="hw"></select></div>
+    <div class="f"><label>Período</label><select id="per"><option value="12">Últimos 12 meses</option><option value="24">Últimos 24 meses</option><option value="6">Últimos 6 meses</option><option value="3">Últimos 3 meses</option><option value="0">Todo o histórico</option></select></div>
+    <div class="f"><label>Faixa de horário</label><select id="bin"><option value="">Todas</option><option value="0">00–04</option><option value="1">04–08</option><option value="2">08–12</option><option value="3">12–16</option><option value="4">16–20</option><option value="5">20–24</option></select></div>
+    <button id="clr">LIMPAR</button>
+  </div>
+  <div class="grid k">
+    <div class="kpi" style="border-left-color:var(--navy)"><span>Total de ocorrências</span><b id="k1">–</b><div class="sub">Recorte selecionado</div></div>
+    <div class="kpi" style="border-left-color:var(--red)"><span>Ocorrências graves</span><b id="k2">–</b><div class="sub" id="k2s">Óbitos ou feridos graves</div></div>
+    <div class="kpi" style="border-left-color:var(--amb)"><span>Risco previsto pelo modelo</span><b id="k3">–</b><div class="sub" id="k3s">Baixo • Médio • Alto</div></div>
+    <div class="kpi" style="border-left-color:var(--teal)"><span>Rodovias analisadas</span><b id="k4">–</b><div class="sub" id="k4s"></div></div>
+  </div>
+  <div class="grid r1">
+    <div class="card"><h2>Mapa de trechos (latitude/longitude)</h2><div class="sub">Trechos de 10 km • tamanho = volume, cor = risco do modelo</div>
+      <svg id="map" viewBox="0 0 560 300" style="background:var(--map);border-radius:10px;margin-top:8px"></svg>
+      <div class="leg"><span style="color:var(--grn)">● Baixo</span><span style="color:var(--amb)">● Médio</span><span style="color:var(--red)">● Alto</span></div></div>
+    <div class="card"><h2>Ocorrências por faixa de horário</h2><div class="sub">Total no recorte</div><svg id="hrs" viewBox="0 0 300 220"></svg></div>
+  </div>
+  <div class="grid"><div class="card"><h2>Trechos de atenção (detecção automática)</h2><div class="sub">Janelas de 25 km com concentração de acidentes bem acima da média da rodovia no recorte.</div><div class="rt" id="hot"></div></div></div>
+  <div class="grid r2">
+    <div class="card"><h2>Evolução das ocorrências</h2><div class="sub">Tendência mensal</div><svg id="evo" viewBox="0 0 300 160"></svg></div>
+    <div class="card"><h2>Gravidade por rodovia</h2><div class="sub">Barra = % de graves observado • cor = risco previsto</div><svg id="sev" viewBox="0 0 300 170"></svg></div>
+    <div class="card"><h2>Trechos de maior risco previsto</h2><div class="sub">Maior probabilidade de gravidade (modelo)</div><div id="top"></div></div>
+  </div>
+  <footer><span class="note" id="foot">Sem dados carregados.</span></footer>
+</div>
+</main>
+<script>
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const REG={};[['Norte','AC AP AM PA RO RR TO'],['Nordeste','MA PI CE RN PB PE AL SE BA'],['Centro-Oeste','DF GO MT MS'],['Sudeste','ES MG RJ SP'],['Sul','PR RS SC']].forEach(([r,l])=>l.split(' ').forEach(u=>REG[u]=r));const M=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+let D=[],cut=[.33,.66],src='',SRV=null;
+const MX=(a,f=x=>x)=>{let m=-Infinity;for(const x of a){const v=f(x);if(v>m)m=v}return m},MN=(a,f=x=>x)=>{let m=Infinity;for(const x of a){const v=f(x);if(v<m)m=v}return m};
+let MOMIN=0,MOMAX=0;
+const col=c=>c=='Alto'?'var(--red)':c=='Médio'?'var(--amb)':'var(--grn)';
+const cls=v=>v>=cut[1]?'Alto':v>=cut[0]?'Médio':'Baixo';
+const pct=v=>(100*v).toFixed(1).replace('.',',')+'%';
+const tkey=r=>r.br+'|'+r.uf+'|'+Math.floor(r.km/10)*10;
+
+/* ---------- aplicação ---------- */
+function setData(rows,label){
+ D=rows;src=label;MOMIN=MN(D,r=>r.mo);MOMAX=MX(D,r=>r.mo);
+ if(!D.length){$('mdl').textContent='Nenhum registro válido encontrado.';return}
+ setTimeout(()=>{
+  // pontos de corte (tercis dos trechos, base completa)
+  const a={};D.forEach(r=>{const k=tkey(r);(a[k]=a[k]||[0,0])[0]+=r.p;a[k][1]++});
+  const v=Object.values(a).filter(x=>x[1]>=5).map(x=>x[0]/x[1]).sort((x,y)=>x-y);
+  cut=v.length?[v[Math.floor(v.length*.33)],v[Math.floor(v.length*.66)]]:[.3,.6];
+  $('mdl').innerHTML=`Modelo <b>${esc(SRV.escolhido)}</b> (treinado no servidor, corte temporal) • AUC no teste: <b>${String(SRV.auc_teste[SRV.escolhido]).replace('.',',')}</b> • ${SRV.registros.toLocaleString('pt-BR')} acidentes de ${SRV.periodo[0]} a ${SRV.periodo[1]} • taxa base de graves ${pct(SRV.taxa_base_graves)}`;
+  const count=(k,fn)=>Object.entries(D.reduce((o,r)=>(o[fn(r)]=(o[fn(r)]||0)+1,o),{})).sort((x,y)=>y[1]-x[1]).map(x=>x[0]);
+  $('uf').innerHTML='<option value="">Todas</option>'+[...new Set(D.map(r=>r.uf))].sort().map(u=>`<option>${esc(u)}</option>`).join('');
+  $('hw').innerHTML='<option value="">Todas</option>'+count(0,r=>r.br).slice(0,150).map(u=>`<option>${esc(u)}</option>`).join('');
+  $('bdg').textContent='DADOS PRF';
+  $('foot').textContent='Fonte: '+label+' • '+D.length.toLocaleString('pt-BR')+' registros. Gravidade = ocorrência com óbito ou ferido grave.';
+  render();
+ },30);
+}
+function render(){
+ if(!D.length)return;
+ const reg=$('reg').value,uf=$('uf').value,hw=$('hw').value,per=+$('per').value,bin=$('bin').value;
+ const mx=MOMAX,mi=per?mx-per+1:MOMIN;
+ const rows=D.filter(r=>(!reg||REG[r.uf]==reg)&&(!uf||r.uf==uf)&&(!hw||r.br==hw)&&r.mo>=mi&&(bin===''||r.bin==+bin));
+ const tot=rows.length,gr=rows.reduce((a,r)=>a+r.g,0),T={};
+ rows.forEach(r=>{const k=tkey(r),t=T[k]||(T[k]={br:r.br,k0:Math.floor(r.km/10)*10,uf:r.uf,n:0,g:0,sp:0,la:0,lo:0,nl:0});t.n++;t.g+=r.g;t.sp+=r.p;if(r.lat&&r.lon&&r.lat<6&&r.lat>-34&&r.lon<-28&&r.lon>-74){t.la+=r.lat;t.lo+=r.lon;t.nl++}});
+ const T2=Object.values(T).map(t=>({...t,p:t.sp/t.n,c:cls(t.sp/t.n)}));
+ const avg=tot?rows.reduce((a,r)=>a+r.p,0)/tot:0;
+ $('k1').textContent=tot.toLocaleString('pt-BR');$('k2').textContent=gr.toLocaleString('pt-BR');$('k2s').textContent=tot?pct(gr/tot)+' do total':'';
+ $('k3').innerHTML=tot?`<i style="font-style:normal;color:${col(cls(avg))}">${cls(avg)}</i> ${pct(avg)}`:'–';$('k3s').textContent='P(grave) média prevista';
+ const hws=[...new Set(T2.map(t=>t.br))];$('k4').textContent=hws.length;$('k4s').textContent=T2.length+' trechos de 10 km';
+ // mapa
+ const G=T2.filter(t=>t.nl>0).map(t=>({...t,la:t.la/t.nl,lo:t.lo/t.nl}));
+ if(G.length){const la=G.map(t=>t.la),lo=G.map(t=>t.lo),a0=MN(la),a1=MX(la),o0=MN(lo),o1=MX(lo),sc=Math.min(520/Math.max(o1-o0,.01),260/Math.max(a1-a0,.01));
+  const X=t=>20+(t.lo-o0)*sc,Y=t=>280-(t.la-a0)*sc,mn=MX(G,t=>t.n);let s='';
+  [...new Set(G.map(t=>t.br+'|'+t.uf))].forEach(h=>{const ts=G.filter(t=>t.br+'|'+t.uf==h).sort((x,y)=>x.k0-y.k0);let pts=[];ts.forEach((t,i)=>{if(i&&t.k0-ts[i-1].k0>30){if(pts.length>1)s+=`<polyline points="${pts.join(' ')}" fill="none" stroke="var(--road)" stroke-width="2"/>`;pts=[]}pts.push(X(t).toFixed(1)+','+Y(t).toFixed(1))});if(pts.length>1)s+=`<polyline points="${pts.join(' ')}" fill="none" stroke="var(--road)" stroke-width="2"/>`});
+  G.forEach(t=>s+=`<circle cx="${X(t).toFixed(1)}" cy="${Y(t).toFixed(1)}" r="${3+7*Math.sqrt(t.n/mn)}" fill="${col(t.c)}" fill-opacity=".85" stroke="var(--card)"><title>${esc(t.br)} km ${t.k0}–${t.k0+10} (${esc(t.uf)}): ${t.n} ocorrências, ${t.g} graves • P(grave) ${pct(t.p)} • ${t.c}</title></circle>`);
+  $('map').innerHTML=s}else $('map').innerHTML='<text x="20" y="40">Sem coordenadas válidas no recorte.</text>';
+ // horário
+ const hc=[0,0,0,0,0,0];rows.forEach(r=>hc[r.bin]++);const hm=Math.max(1,MX(hc));
+ $('hrs').innerHTML=hc.map((v,i)=>{const h=v/hm*160;return `<rect x="${12+i*48}" y="${180-h}" width="34" height="${h}" rx="5" fill="${v==hm&&v?'var(--teal)':'var(--navy)'}"/><text x="${29+i*48}" y="200" text-anchor="middle">${['00–04','04–08','08–12','12–16','16–20','20–24'][i]}</text><text x="${29+i*48}" y="${174-h}" text-anchor="middle">${v}</text>`}).join('');
+ // evolução
+ const n=Math.min(72,mx-mi+1),ms=Array(n).fill(0);rows.forEach(r=>{const i=r.mo-(mx-n+1);if(i>=0)ms[i]++});const lm=Math.max(1,MX(ms));
+ const XX=i=>20+i*(260/Math.max(1,n-1)),YY=v=>130-v/lm*105;
+ $('evo').innerHTML=`<polyline fill="none" stroke="var(--teal)" stroke-width="2.5" points="${ms.map((v,i)=>XX(i)+','+YY(v)).join(' ')}"/>`+ms.map((v,i)=>`<circle cx="${XX(i)}" cy="${YY(v)}" r="3" fill="var(--teal)"><title>${v}</title></circle>${i%Math.ceil(n/8)==0?`<text x="${XX(i)}" y="150" text-anchor="middle">${M[(mx-n+1+i)%12]}/${String(Math.floor((mx-n+1+i)/12)).slice(2)}</text>`:''}`).join('');
+ // gravidade por rodovia
+ const B={};rows.forEach(r=>{const b=B[r.br]||(B[r.br]={n:0,g:0,p:0});b.n++;b.g+=r.g;b.p+=r.p});
+ const hs=Object.entries(B).sort((a,b)=>b[1].n-a[1].n).slice(0,6),gm=Math.max(.01,...hs.map(x=>x[1].g/x[1].n));
+ $('sev').innerHTML=hs.map(([id,b],i)=>`<text x="0" y="${18+i*27}">${esc(id)}</text><rect x="48" y="${6+i*27}" width="${b.g/b.n/gm*200}" height="16" rx="4" fill="${col(cls(b.p/b.n))}"/><text x="${52+b.g/b.n/gm*200}" y="${18+i*27}">${pct(b.g/b.n)}</text>`).join('');
+ // trechos de atenção: janelas de 25 km acima da média da rodovia
+ const W=25,byb={},hot=[];rows.forEach(r=>(byb[r.br+'|'+r.uf]=byb[r.br+'|'+r.uf]||[]).push(r));
+ Object.entries(byb).forEach(([br,rs])=>{
+  let kmn=1e9,kmx=0;rs.forEach(r=>{const k=Math.floor(r.km);if(k<kmn)kmn=k;if(k>kmx)kmx=k});
+  const P=new Int32Array(kmx+W+2);rs.forEach(r=>P[Math.floor(r.km)+1]++);for(let i=1;i<P.length;i++)P[i]+=P[i-1];
+  const mu=rs.length*W/Math.max(W,kmx-kmn+1),cand=[];
+  for(let st=kmn;st<=kmx;st++){const n=P[st+W]-P[st];if(n>=8&&n/mu>=2){const z=(n-mu)/Math.sqrt(mu);if(z>=3)cand.push({st,z})}}
+  const ok=[];cand.sort((a,b)=>b.z-a.z).forEach(c=>{if(ok.length<3&&ok.every(o=>Math.abs(o.st-c.st)>=W))ok.push(c)});
+  ok.forEach(c=>{const ms=rs.filter(r=>r.km>=c.st&&r.km<c.st+W),ks=ms.map(r=>r.km),k0=Math.floor(MN(ks)),k1=Math.max(k0+1,Math.ceil(MX(ks))),p=ms.reduce((a,r)=>a+r.p,0)/ms.length;
+   hot.push({br:rs[0].br,k0,k1,uf:ms[0].uf,n:ms.length,m:ms.reduce((a,r)=>a+r.m,0),fe:ms.reduce((a,r)=>a+r.fe,0),x:ms.length/mu,z:c.z,p,c:cls(p)})})});
+ hot.sort((a,b)=>b.z-a.z);
+ $('hot').innerHTML=hot.slice(0,6).map(h=>`<div class="ro" style="cursor:default"><b>${esc(h.br)} — km ${h.k0}–${h.k1} (${esc(h.uf)})</b>${h.n} acidentes registrados<br>${h.m} acidentes com mortes<br>${h.fe} feridos<br>Concentração: <b style="display:inline">${h.x.toFixed(1).replace('.',',')}×</b> a média da rodovia<div class="sub">Risco previsto: <b style="display:inline;color:${col(h.c)}">${h.c}</b> · ${pct(h.p)}</div></div>`).join('')||'<div class="sub">Nenhuma concentração relevante no recorte.</div>';
+ // trechos
+ const top=T2.filter(t=>t.n>=5).sort((a,b)=>b.p-a.p).slice(0,5);
+ $('top').innerHTML=top.map(t=>`<div class="row"><span class="dot" style="background:${col(t.c)}"></span>${esc(t.br)} km ${t.k0}–${t.k0+10} (${esc(t.uf)})<span class="tag" style="color:${col(t.c)}">${t.c} · ${pct(t.p)}</span></div>`).join('')||'<div class="sub">Sem trechos com 5+ ocorrências no recorte.</div>';
+}
+/* ---------- eventos e carga ---------- */
+['reg','uf','hw','per','bin'].forEach(i=>$(i).onchange=render);
+$('clr').onclick=()=>{['reg','uf','hw','bin'].forEach(i=>$(i).value='');$('per').value='12';render()};
+$('mdl').textContent='Carregando dados… (pode levar alguns segundos com vários anos de CSV)';
+fetch('/api/dados').then(r=>{if(!r.ok)throw new Error('servidor respondeu '+r.status);return r.json()}).then(c=>{SRV=c.info;const n=c.br.length,rows=new Array(n);
+ for(let i=0;i<n;i++)rows[i]={br:'BR-'+c.brs[c.br[i]],km:c.km[i],uf:c.ufs[c.uf[i]],bin:c.bin[i],dow:c.dow[i],mo:c.mo0+c.mo[i],g:c.g[i],m:c.m[i],fe:c.fe[i],lat:c.lat[i],lon:c.lon[i],p:c.p[i]};
+ setData(rows,c.fonte)}).catch(e=>{$('mdl').textContent='Erro ao carregar os dados: '+e.message+'. Veja o terminal do servidor.'});
+</script>
+</body>
+</html>

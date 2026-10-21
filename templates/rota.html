@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rota Segura | Planejador de Rotas</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='routesafe.css') }}">
+<style>
+.rota-grid{display:grid;grid-template-columns:420px 1fr;gap:18px;height:calc(100vh - var(--topbar) - 68px);min-height:520px}
+.side{padding:22px;overflow:auto}
+.mapbox{overflow:hidden;min-height:360px}
+#map{height:100%;min-height:360px;background:#eaf1f9}
+.side h2{font-size:20px;font-weight:750;letter-spacing:-.4px;margin:0 0 4px}
+.side label{display:block;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin:14px 0 5px}
+.side input,.side select{width:100%;padding:11px 12px;border-radius:9px;font:inherit;font-size:14px;color:var(--text);background:#f7faff;border:1px solid #d9e4f0}
+.side input:focus,.side select:focus{border-color:var(--blue);outline:0;background:#fff}
+.side input::placeholder{color:#8ea3b9}
+#go{width:100%;margin-top:18px;padding:13px}
+.sub{font-size:12px;color:var(--muted)}
+.err{color:#b42323;background:#fdeeee;border:1px solid #f6c9c9;border-radius:9px;padding:11px;margin-top:14px;font-size:13px}
+.card{border:1px solid var(--border);background:#fff;border-radius:13px;padding:14px;margin-top:14px;cursor:pointer;transition:.2s}
+.card:hover{border-color:#a9c9f3}
+.card.on{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue) inset;background:#f8fbff}
+.card h3{margin:0 0 8px;font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.tag{font-size:10px;font-weight:600;background:#eaf3ff;color:#0873ed;border-radius:7px;padding:2px 8px;margin-left:4px;white-space:nowrap}
+.k{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin:10px 0}
+.k b{display:block;font-size:16px;font-weight:700}
+.k span{font-size:11px;color:var(--muted)}
+.pill{padding:3px 11px;border-radius:10px;font-weight:700;font-size:12px;white-space:nowrap}
+.card ul{margin:6px 0 0;padding-left:18px;font-size:12px;color:#4d6a88}
+.ab{background:transparent;border:0;box-shadow:none;color:#fff;font-weight:700;padding:0}
+.ab:before{display:none}
+@media(max-width:1000px){.rota-grid{grid-template-columns:1fr;height:auto}.side{overflow:visible}#map{height:55vh}}
+</style>
+</head>
+<body>
+{% set ativo = 'rota' %}
+{% include '_sidebar.html' %}
+
+<main class="main">
+<header class="topbar">
+    <div class="page-title"><i class="bi bi-signpost-split"></i> Planejador de Rotas</div>
+    <div class="region"><i class="bi bi-geo-alt-fill me-1"></i>Todo o Brasil</div>
+</header>
+
+<div class="content">
+  <div class="rota-grid">
+    <section class="panel side">
+        <h2>Planejar rota</h2>
+        <div class="sub">Compare alternativas por distância, tempo e risco de acidentes.</div>
+        <label>Origem</label><input id="o" placeholder="Ex.: Salto, SP">
+        <label>Destino</label><input id="d" placeholder="Ex.: Bahia, BA">
+        <label>Saída (opcional)</label><input id="s" type="datetime-local">
+        {% if ped_ativo %}<label>Veículo (para o pedágio)</label><select id="cat">{% for k,v in categorias.items() %}<option value="{{k}}" {{ 'selected' if k=='carro' }}>{{v}}</option>{% endfor %}</select>{% endif %}
+        <button id="go" class="btn-blue">Calcular rotas</button>
+        <div id="res"></div>
+        <p class="sub" style="margin-top:18px">Modelo: <b>{{ info.escolhido }}</b> (AUC {{ info.auc_teste[info.escolhido] }} em teste temporal), {{ "{:,}".format(info.registros).replace(",",".") }} acidentes de {{ info.periodo[0] }} a {{ info.periodo[1] }}; as contagens por rota somam todo esse período. Tempo estimado sem considerar trânsito (OSRM).{% if ped_ativo %} Pedágio: valores por passagem e por categoria, só para as praças cadastradas na Base da ANTT ({{ ped_ufs }}); praças de outros estados e pedágios estaduais não entram no total.{% endif %} Mapa © OpenStreetMap.</p>
+    </section>
+    <section class="panel mapbox"><div id="map"></div></section>
+  </div>
+</div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const $=id=>document.getElementById(id),COR={Baixo:'#20b978','Médio':'#f5a623',Alto:'#e5484d'},PILL={Baixo:['#e3f6ed','#11804f'],'Médio':['#fdf0d8','#8a5800'],Alto:['#fde6e6','#b42323']};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let R=[],sel=0;
+const map=L.map('map').setView([-14.2,-51.9],4);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);
+const over=L.layerGroup().addTo(map);
+function decodePoly(e){let i=0,la=0,lo=0,o=[];while(i<e.length){for(const ax of [0,1]){let r=0,s=0,b;do{b=e.charCodeAt(i++)-63;r|=(b&31)<<s;s+=5}while(b>=32);const v=r&1?~(r>>1):r>>1;ax?lo+=v:la+=v}o.push([la/1e5,lo/1e5])}return o}
+const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}),pct=v=>v==null?'–':(100*v).toFixed(1).replace('.',',')+'%',n1=v=>String(v).replace('.',',');
+const dur=m=>Math.floor(m/60)+' h '+String(m%60).padStart(2,'0')+' min';
+$('go').onclick=async()=>{
+  const b=$('go');b.disabled=true;b.textContent='Calculando…';$('res').innerHTML='';
+  try{
+    const r=await fetch('/api/rota',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({origem:$('o').value,destino:$('d').value,saida:$('s').value,categoria:$('cat')?$('cat').value:'carro'})});
+    const j=await r.json();if(!r.ok)throw new Error(j.erro||'Erro');
+    R=j.rotas;sel=0;mostrar();
+  }catch(e){$('res').innerHTML='<div class="err">'+esc(e.message)+'</div>'}
+  b.disabled=false;b.textContent='Calcular rotas';
+};
+function mostrar(){
+  $('res').innerHTML=R.map((r,i)=>{const k=r.risco;return `<div class="card ${i==sel?'on':''}" data-i="${i}">
+   <h3><span>Rota ${i+1}${r.rotulos.map(t=>`<span class="tag">${t}</span>`).join('')}</span><span class="pill" style="background:${PILL[k.classe][0]};color:${PILL[k.classe][1]}">${k.classe}</span></h3>
+   <div class="k"><div><b>${n1(r.distancia_km)} km</b><span>Distância</span></div><div><b>${dur(r.duracao_min)}</b><span>Tempo</span></div>
+   ${r.pedagio?`<div><b>${brl(r.pedagio.total)}</b><span>Pedágio (${r.pedagio.n} ${r.pedagio.n==1?'praça':'praças'})</span></div>`:''}<div><b>${n1(k.razao_media_nacional)}×</b><span>Índice vs. média nacional</span></div><div><b>${n1(k.acidentes_100km)}</b><span>Acidentes por 100 km</span></div><div><b>${pct(k.p_grave_modelo)}</b><span>Gravidade prevista (ML)</span></div></div>
+   <div class="sub">${k.acidentes} acidentes no corredor, no período dos dados • ${k.acidentes_com_mortes} com mortes • ${k.feridos} feridos<br>Gravidade prevista na média nacional: ${pct(k.p_grave_nacional)}</div>
+   ${i==sel&&r.pedagio&&r.pedagio.n?'<div class="sub" style="margin-top:6px"><b>Praças no caminho:</b></div><ul>'+r.pedagio.pracas.map(p=>`<li>${esc(p.nome.replace('Pedágio ',''))} (${esc(p.rodovia)}/${esc(p.uf)}): ${p.preco==null?'sem valor':brl(p.preco)}</li>`).join('')+'</ul>':''}
+   ${i==sel&&k.trechos_criticos.length?'<ul>'+k.trechos_criticos.map(t=>`<li>BR-${esc(t.br)} (${esc(t.uf)}) km ${t.km_ini}–${t.km_fim}: ${t.acidentes} acidentes, ${t.mortes} mortos</li>`).join('')+'</ul>':''}</div>`}).join('');
+  document.querySelectorAll('.card').forEach(c=>c.onclick=()=>{sel=+c.dataset.i;mostrar()});desenhar();
+}
+function desenhar(){
+  over.clearLayers();let bounds=null;
+  R.forEach((r,i)=>{const path=decodePoly(r.polyline),on=i==sel;
+    const p=L.polyline(path,{color:on?COR[r.risco.classe]:'#6f8fb0',weight:on?6:4,opacity:on?.95:.55}).on('click',()=>{sel=i;mostrar()});
+    on?p.addTo(over):p.addTo(over).bringToBack();bounds=bounds?bounds.extend(p.getBounds()):p.getBounds();
+    if(on){[[path[0],'A'],[path[path.length-1],'B']].forEach(([c,t])=>L.circleMarker(c,{radius:9,color:'#fff',weight:2,fillColor:'#1677f2',fillOpacity:1}).bindTooltip(t,{permanent:true,direction:'center',className:'ab'}).addTo(over));
+      (r.pedagio?r.pedagio.pracas:[]).forEach(p=>L.circleMarker([p.lat,p.lon],{radius:7,color:'#fff',weight:2,fillColor:'#f5a623',fillOpacity:1}).bindTooltip(p.nome+(p.preco==null?'':' • '+brl(p.preco))).addTo(over));
+      r.risco.graves.forEach(([la,lo])=>L.circle([la,lo],{radius:900,stroke:false,fillColor:'#e5484d',fillOpacity:.3,interactive:false}).addTo(over))}});
+  if(bounds)map.fitBounds(bounds,{padding:[30,30]});
+}
+</script>
+</body>
+</html>

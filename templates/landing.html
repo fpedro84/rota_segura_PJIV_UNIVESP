@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rota Segura | PJIV Univesp</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='routesafe.css') }}">
+<style>
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center;margin-bottom:28px}
+.eyebrow{color:#4784c7;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.hero h1{font-size:42px;line-height:1.13;letter-spacing:-1.7px;margin:0 0 18px;font-weight:750}.hero h1 span{color:var(--blue)}
+.hero p{max-width:650px;color:#5d7592;font-size:15px;line-height:1.7;margin:0 0 25px}
+.highlights{display:flex;gap:25px;flex-wrap:wrap}.highlight{display:flex;align-items:center;gap:9px;color:#54708e;font-size:12px}.highlight i{color:var(--blue);font-size:19px}
+.hero-image{height:305px;border-radius:14px;overflow:hidden;position:relative;background:linear-gradient(135deg,#dbe9f9,#b9d3f0);background-image:linear-gradient(90deg,rgba(15,49,87,.05),rgba(15,49,87,.05)),url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80");background-size:cover;background-position:center}
+.region-badge{position:absolute;right:15px;top:15px;background:rgba(20,51,84,.86);color:#fff;padding:13px 18px;border-radius:10px;font-size:12px}.region-badge small{display:block;opacity:.7;margin-top:4px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.feature-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:26px 29px;min-height:305px;position:relative;overflow:hidden;transition:.2s}
+.feature-card:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(29,78,125,.08)}
+.route{border-top:3px solid var(--blue)}.accident{border-top:3px solid var(--purple)}
+.feature-icon{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:22px;margin-bottom:17px}.route .feature-icon{background:var(--blue)}.accident .feature-icon{background:var(--purple)}
+.feature-card h2{font-size:24px;letter-spacing:-.5px;margin:0 0 12px}.feature-card p{width:57%;color:#66809d;font-size:13px;line-height:1.65;margin:0 0 14px}
+.button{display:inline-flex;align-items:center;gap:12px;color:#fff;border-radius:9px;padding:11px 18px;font-size:12px;font-weight:650;margin-top:8px;transition:.2s}.button:hover{color:#fff;transform:translateY(-1px)}.route .button{background:var(--blue)}.accident .button{background:var(--purple)}
+.visual{position:absolute;right:10px;top:28px;width:42%;height:245px;opacity:.9}
+.route-map{width:100%;height:100%;position:relative;background:radial-gradient(circle at 50% 40%,rgba(34,126,242,.12),transparent 55%)}
+.route-map:before{content:"";position:absolute;inset:20px;background:linear-gradient(25deg,transparent 47%,#d6e6fa 48%,transparent 49%),linear-gradient(115deg,transparent 47%,#d6e6fa 48%,transparent 49%);opacity:.8}
+.route-path{position:absolute;width:75%;height:5px;background:var(--blue);left:10%;top:51%;transform:rotate(-28deg);border-radius:5px}
+.marker{width:13px;height:13px;border-radius:50%;position:absolute;background:#fff;border:4px solid var(--blue)}.marker.start{left:9%;top:63%}.marker.end{right:10%;top:30%;border-color:#ef4c5c}
+.heatmap{height:100%;position:relative;background:linear-gradient(120deg,transparent 40%,#edf2fb 41%,transparent 42%),linear-gradient(45deg,transparent 48%,#edf2fb 49%,transparent 50%);border-radius:50%}
+.heat{position:absolute;width:55px;height:55px;border-radius:50%;background:radial-gradient(circle,#ff5c50 0%,#ffb238 28%,rgba(255,190,50,.1) 60%,transparent 72%)}.heat.a{left:30%;top:20%}.heat.b{left:58%;top:45%;width:70px;height:70px}.heat.c{left:42%;top:68%;width:45px;height:45px}
+.info-bar{margin-top:26px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 10px;display:grid;grid-template-columns:repeat(4,1fr)}
+.info{display:flex;align-items:center;gap:14px;padding:8px 20px;min-height:60px;border-right:1px solid var(--border)}.info:last-child{border-right:0}
+.info-icon{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#eef6ff;color:var(--blue);flex:none}.info strong{display:block;font-size:12px}.info span{display:block;color:#8195ab;font-size:10px;margin-top:3px}
+.footer{display:flex;justify-content:space-between;gap:12px;padding:25px 5px 5px;color:#8498ad;font-size:10px}.footer p{margin:4px 0 0}
+@media(max-width:1100px){.info-bar{grid-template-columns:1fr 1fr}.info:nth-child(2){border-right:0}}
+@media(max-width:850px){.hero,.cards{grid-template-columns:1fr}.hero h1{font-size:35px}.hero-image{height:250px}.feature-card p{width:70%}}
+@media(max-width:600px){.hero h1{font-size:32px}.hero-image{height:210px}.feature-card{min-height:360px}.feature-card p{width:100%}.visual{opacity:.22;width:70%;top:115px}.info-bar{grid-template-columns:1fr}.info{border-right:0;border-bottom:1px solid var(--border)}.info:last-child{border-bottom:0}.footer{flex-direction:column;gap:8px}.region{display:none}}
+</style>
+</head>
+<body>
+{% set ativo = 'inicio' %}
+{% include '_sidebar.html' %}
+
+<main class="main">
+<header class="topbar">
+    <div class="page-title"><i class="bi bi-house-fill"></i> Início</div>
+    <div class="region"><i class="bi bi-geo-alt-fill me-1"></i>Todo o Brasil</div>
+</header>
+
+<div class="content">
+
+<section class="hero">
+    <div>
+        <div class="eyebrow">Inteligência em mobilidade</div>
+        <h1>Rotas mais seguras,<br>decisões <span>mais inteligentes.</span></h1>
+        <p>O Projeto e Rotas Seguras utiliza dados públicos da PRF para planejar rotas e analisar acidentes, ajudando a tomar melhores decisões nas rodovias federais de todo o Brasil.</p>
+        <div class="highlights">
+            <div class="highlight"><i class="bi bi-shield-check"></i>Mais segurança</div>
+            <div class="highlight"><i class="bi bi-clock"></i>Rotas eficientes</div>
+            <div class="highlight"><i class="bi bi-bar-chart"></i>Dados públicos</div>
+            <div class="highlight"><i class="bi bi-map"></i>Cobertura nacional</div>
+        </div>
+    </div>
+    <div class="hero-image">
+        <div class="region-badge"><i class="bi bi-geo-alt-fill me-1"></i>Todo o Brasil<small>Rodovias federais</small></div>
+    </div>
+</section>
+
+<section class="cards">
+    <article class="feature-card route">
+        <div class="feature-icon"><i class="bi bi-signpost-split"></i></div>
+        <h2>Planejador de Rotas</h2>
+        <p>Informe origem e destino, compare rotas alternativas e veja distância, tempo e o índice de acidentes de cada rota.</p>
+        <a href="/rota" class="button">Acessar Planejador <i class="bi bi-arrow-right"></i></a>
+        <div class="visual"><div class="route-map"><div class="route-path"></div><div class="marker start"></div><div class="marker end"></div></div></div>
+    </article>
+
+    <article class="feature-card accident">
+        <div class="feature-icon"><i class="bi bi-shield-exclamation"></i></div>
+        <h2>Análise de Acidentes</h2>
+        <p>Explore os acidentes registrados, identifique trechos de atenção, compare regiões e períodos e visualize tudo em mapas e gráficos.</p>
+        <a href="/painel" class="button">Acessar Painel <i class="bi bi-arrow-right"></i></a>
+        <div class="visual"><div class="heatmap"><div class="heat a"></div><div class="heat b"></div><div class="heat c"></div></div></div>
+    </article>
+</section>
+
+<section class="info-bar">
+    <div class="info"><div class="info-icon"><i class="bi bi-database"></i></div><div><strong>Dados da PRF</strong><span>{{ s.registros }} acidentes, {{ s.graves }} graves</span></div></div>
+    <div class="info"><div class="info-icon"><i class="bi bi-geo-alt"></i></div><div><strong>Cobertura</strong><span>{{ s.brs }} BRs em {{ s.ufs }} estados</span></div></div>
+    <div class="info"><div class="info-icon"><i class="bi bi-cpu"></i></div><div><strong>Machine Learning</strong><span>{{ s.modelo }}, AUC {{ s.auc }}</span></div></div>
+    <div class="info"><div class="info-icon"><i class="bi bi-cash-coin"></i></div><div><strong>Pedágios da ANTT</strong><span>{{ s.pracas }} praças no cálculo</span></div></div>
+</section>
+
+<footer class="footer">
+    <div>
+        <span><i class="bi bi-shield-check me-1"></i>Rota Segura &nbsp; • &nbsp; Dados públicos da PRF e da ANTT &nbsp; • &nbsp; Mapas © OpenStreetMap</span>
+        <p>O modelo estima a gravidade de um acidente que já ocorreu, não a chance de ele acontecer. Projeto Integrador IV, UNIVESP.</p>
+    </div>
+    <span>Juntos por estradas mais seguras.</span>
+</footer>
+
+</div>
+</main>
+</body>
+</html>
