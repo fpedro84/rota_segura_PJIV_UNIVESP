@@ -1,6 +1,13 @@
 # Documentação Técnica e Funcional — Rota Segura
 
 **Projeto:** PI IV — UNIVESP  
+Anderson Luiz de Oliveira, RA 23203435
+Daniel Amoroso Ferreira, RA 23228000
+Heloísa Maria Ferretti Scarabelin, RA 2106134 
+Lucas Smith Roque, RA 23213649
+Marcos Fabricio Pedro, RA 23202611
+Melquizedeque de Oliveira Andrade, RA 23216712
+
 **Nome da aplicação:** Rota Segura 
 **Tipo:** Aplicação web de planejamento de rotas e análise de risco rodoviário  
 **Versão:** V1.0.0
