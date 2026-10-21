@@ -1,0 +1,481 @@
+id,nome,rodovia,uf,latitude,longitude,categoria,preco
+1,Pedágio Arujá,BR-116,SP,-23.3981,-46.3052,moto,2.40
+2,Pedágio Arujá,BR-116,SP,-23.3981,-46.3052,carro,4.80
+3,Pedágio Arujá,BR-116,SP,-23.3981,-46.3052,caminhao_2_eixos,9.60
+4,Pedágio Arujá,BR-116,SP,-23.3981,-46.3052,caminhao_3_eixos,14.40
+5,Pedágio Arujá,BR-116,SP,-23.3981,-46.3052,caminhao_4_eixos,19.20
+6,Pedágio Arujá,BR-116,SP,-23.3981,-46.3052,caminhao_6_eixos,28.80
+7,Pedágio Guararema,BR-116,SP,-23.3421,-46.0685,moto,2.40
+8,Pedágio Guararema,BR-116,SP,-23.3421,-46.0685,carro,4.80
+9,Pedágio Guararema,BR-116,SP,-23.3421,-46.0685,caminhao_2_eixos,9.60
+10,Pedágio Guararema,BR-116,SP,-23.3421,-46.0685,caminhao_3_eixos,14.40
+11,Pedágio Guararema,BR-116,SP,-23.3421,-46.0685,caminhao_4_eixos,19.20
+12,Pedágio Guararema,BR-116,SP,-23.3421,-46.0685,caminhao_6_eixos,28.80
+13,Pedágio Jacareí,BR-116,SP,-23.315,-45.95,moto,3.10
+14,Pedágio Jacareí,BR-116,SP,-23.315,-45.95,carro,6.20
+15,Pedágio Jacareí,BR-116,SP,-23.315,-45.95,caminhao_2_eixos,12.40
+16,Pedágio Jacareí,BR-116,SP,-23.315,-45.95,caminhao_3_eixos,18.60
+17,Pedágio Jacareí,BR-116,SP,-23.315,-45.95,caminhao_4_eixos,24.80
+18,Pedágio Jacareí,BR-116,SP,-23.315,-45.95,caminhao_6_eixos,37.20
+19,Pedágio Moreira César,BR-116,SP,-22.9288,-45.3852,moto,7.50
+20,Pedágio Moreira César,BR-116,SP,-22.9288,-45.3852,carro,15.00
+21,Pedágio Moreira César,BR-116,SP,-22.9288,-45.3852,caminhao_2_eixos,30.00
+22,Pedágio Moreira César,BR-116,SP,-22.9288,-45.3852,caminhao_3_eixos,45.00
+23,Pedágio Moreira César,BR-116,SP,-22.9288,-45.3852,caminhao_4_eixos,60.00
+24,Pedágio Moreira César,BR-116,SP,-22.9288,-45.3852,caminhao_6_eixos,90.00
+25,Pedágio Itatiaia,BR-116,RJ,-22.4961,-44.5714,moto,7.50
+26,Pedágio Itatiaia,BR-116,RJ,-22.4961,-44.5714,carro,15.00
+27,Pedágio Itatiaia,BR-116,RJ,-22.4961,-44.5714,caminhao_2_eixos,30.00
+28,Pedágio Itatiaia,BR-116,RJ,-22.4961,-44.5714,caminhao_3_eixos,45.00
+29,Pedágio Itatiaia,BR-116,RJ,-22.4961,-44.5714,caminhao_4_eixos,60.00
+30,Pedágio Itatiaia,BR-116,RJ,-22.4961,-44.5714,caminhao_6_eixos,90.00
+31,Pedágio Viúva Graça,BR-116,RJ,-22.6932,-43.7651,moto,7.50
+32,Pedágio Viúva Graça,BR-116,RJ,-22.6932,-43.7651,carro,15.00
+33,Pedágio Viúva Graça,BR-116,RJ,-22.6932,-43.7651,caminhao_2_eixos,30.00
+34,Pedágio Viúva Graça,BR-116,RJ,-22.6932,-43.7651,caminhao_3_eixos,45.00
+35,Pedágio Viúva Graça,BR-116,RJ,-22.6932,-43.7651,caminhao_4_eixos,60.00
+36,Pedágio Viúva Graça,BR-116,RJ,-22.6932,-43.7651,caminhao_6_eixos,90.00
+37,Pedágio Mairiporã,BR-381,SP,-23.3375,-46.5786,moto,1.45
+38,Pedágio Mairiporã,BR-381,SP,-23.3375,-46.5786,carro,2.90
+39,Pedágio Mairiporã,BR-381,SP,-23.3375,-46.5786,caminhao_2_eixos,5.80
+40,Pedágio Mairiporã,BR-381,SP,-23.3375,-46.5786,caminhao_3_eixos,8.70
+41,Pedágio Mairiporã,BR-381,SP,-23.3375,-46.5786,caminhao_4_eixos,11.60
+42,Pedágio Mairiporã,BR-381,SP,-23.3375,-46.5786,caminhao_6_eixos,17.40
+43,Pedágio Vargem,BR-381,SP,-22.8892,-46.4011,moto,1.45
+44,Pedágio Vargem,BR-381,SP,-22.8892,-46.4011,carro,2.90
+45,Pedágio Vargem,BR-381,SP,-22.8892,-46.4011,caminhao_2_eixos,5.80
+46,Pedágio Vargem,BR-381,SP,-22.8892,-46.4011,caminhao_3_eixos,8.70
+47,Pedágio Vargem,BR-381,SP,-22.8892,-46.4011,caminhao_4_eixos,11.60
+48,Pedágio Vargem,BR-381,SP,-22.8892,-46.4011,caminhao_6_eixos,17.40
+49,Pedágio Cambuí,BR-381,MG,-22.6108,-46.0461,moto,1.45
+50,Pedágio Cambuí,BR-381,MG,-22.6108,-46.0461,carro,2.90
+51,Pedágio Cambuí,BR-381,MG,-22.6108,-46.0461,caminhao_2_eixos,5.80
+52,Pedágio Cambuí,BR-381,MG,-22.6108,-46.0461,caminhao_3_eixos,8.70
+53,Pedágio Cambuí,BR-381,MG,-22.6108,-46.0461,caminhao_4_eixos,11.60
+54,Pedágio Cambuí,BR-381,MG,-22.6108,-46.0461,caminhao_6_eixos,17.40
+55,Pedágio Careaçu,BR-381,MG,-22.0542,-45.6983,moto,1.45
+56,Pedágio Careaçu,BR-381,MG,-22.0542,-45.6983,carro,2.90
+57,Pedágio Careaçu,BR-381,MG,-22.0542,-45.6983,caminhao_2_eixos,5.80
+58,Pedágio Careaçu,BR-381,MG,-22.0542,-45.6983,caminhao_3_eixos,8.70
+59,Pedágio Careaçu,BR-381,MG,-22.0542,-45.6983,caminhao_4_eixos,11.60
+60,Pedágio Careaçu,BR-381,MG,-22.0542,-45.6983,caminhao_6_eixos,17.40
+61,Pedágio São Gonçalo do Sapucaí,BR-381,MG,-21.8841,-45.5892,moto,1.45
+62,Pedágio São Gonçalo do Sapucaí,BR-381,MG,-21.8841,-45.5892,carro,2.90
+63,Pedágio São Gonçalo do Sapucaí,BR-381,MG,-21.8841,-45.5892,caminhao_2_eixos,5.80
+64,Pedágio São Gonçalo do Sapucaí,BR-381,MG,-21.8841,-45.5892,caminhao_3_eixos,8.70
+65,Pedágio São Gonçalo do Sapucaí,BR-381,MG,-21.8841,-45.5892,caminhao_4_eixos,11.60
+66,Pedágio São Gonçalo do Sapucaí,BR-381,MG,-21.8841,-45.5892,caminhao_6_eixos,17.40
+67,Pedágio Santo Antônio do Amparo,BR-381,MG,-20.9381,-44.9125,moto,1.45
+68,Pedágio Santo Antônio do Amparo,BR-381,MG,-20.9381,-44.9125,carro,2.90
+69,Pedágio Santo Antônio do Amparo,BR-381,MG,-20.9381,-44.9125,caminhao_2_eixos,5.80
+70,Pedágio Santo Antônio do Amparo,BR-381,MG,-20.9381,-44.9125,caminhao_3_eixos,8.70
+71,Pedágio Santo Antônio do Amparo,BR-381,MG,-20.9381,-44.9125,caminhao_4_eixos,11.60
+72,Pedágio Santo Antônio do Amparo,BR-381,MG,-20.9381,-44.9125,caminhao_6_eixos,17.40
+73,Pedágio Carmópolis de Minas,BR-381,MG,-20.5412,-44.6291,moto,1.45
+74,Pedágio Carmópolis de Minas,BR-381,MG,-20.5412,-44.6291,carro,2.90
+75,Pedágio Carmópolis de Minas,BR-381,MG,-20.5412,-44.6291,caminhao_2_eixos,5.80
+76,Pedágio Carmópolis de Minas,BR-381,MG,-20.5412,-44.6291,caminhao_3_eixos,8.70
+77,Pedágio Carmópolis de Minas,BR-381,MG,-20.5412,-44.6291,caminhao_4_eixos,11.60
+78,Pedágio Carmópolis de Minas,BR-381,MG,-20.5412,-44.6291,caminhao_6_eixos,17.40
+79,Pedágio Itatiaiuçu,BR-381,MG,-20.1983,-44.421,moto,1.45
+80,Pedágio Itatiaiuçu,BR-381,MG,-20.1983,-44.421,carro,2.90
+81,Pedágio Itatiaiuçu,BR-381,MG,-20.1983,-44.421,caminhao_2_eixos,5.80
+82,Pedágio Itatiaiuçu,BR-381,MG,-20.1983,-44.421,caminhao_3_eixos,8.70
+83,Pedágio Itatiaiuçu,BR-381,MG,-20.1983,-44.421,caminhao_4_eixos,11.60
+84,Pedágio Itatiaiuçu,BR-381,MG,-20.1983,-44.421,caminhao_6_eixos,17.40
+85,Pedágio São Lourenço da Serra,BR-116,SP,-23.8561,-46.9421,moto,1.85
+86,Pedágio São Lourenço da Serra,BR-116,SP,-23.8561,-46.9421,carro,3.70
+87,Pedágio São Lourenço da Serra,BR-116,SP,-23.8561,-46.9421,caminhao_2_eixos,7.40
+88,Pedágio São Lourenço da Serra,BR-116,SP,-23.8561,-46.9421,caminhao_3_eixos,11.10
+89,Pedágio São Lourenço da Serra,BR-116,SP,-23.8561,-46.9421,caminhao_4_eixos,14.80
+90,Pedágio São Lourenço da Serra,BR-116,SP,-23.8561,-46.9421,caminhao_6_eixos,22.20
+91,Pedágio Miracatu,BR-116,SP,-24.2711,-47.4589,moto,1.85
+92,Pedágio Miracatu,BR-116,SP,-24.2711,-47.4589,carro,3.70
+93,Pedágio Miracatu,BR-116,SP,-24.2711,-47.4589,caminhao_2_eixos,7.40
+94,Pedágio Miracatu,BR-116,SP,-24.2711,-47.4589,caminhao_3_eixos,11.10
+95,Pedágio Miracatu,BR-116,SP,-24.2711,-47.4589,caminhao_4_eixos,14.80
+96,Pedágio Miracatu,BR-116,SP,-24.2711,-47.4589,caminhao_6_eixos,22.20
+97,Pedágio Juquiá,BR-116,SP,-24.321,-47.6321,moto,1.85
+98,Pedágio Juquiá,BR-116,SP,-24.321,-47.6321,carro,3.70
+99,Pedágio Juquiá,BR-116,SP,-24.321,-47.6321,caminhao_2_eixos,7.40
+100,Pedágio Juquiá,BR-116,SP,-24.321,-47.6321,caminhao_3_eixos,11.10
+101,Pedágio Juquiá,BR-116,SP,-24.321,-47.6321,caminhao_4_eixos,14.80
+102,Pedágio Juquiá,BR-116,SP,-24.321,-47.6321,caminhao_6_eixos,22.20
+103,Pedágio Registro,BR-116,SP,-24.4981,-47.8421,moto,1.85
+104,Pedágio Registro,BR-116,SP,-24.4981,-47.8421,carro,3.70
+105,Pedágio Registro,BR-116,SP,-24.4981,-47.8421,caminhao_2_eixos,7.40
+106,Pedágio Registro,BR-116,SP,-24.4981,-47.8421,caminhao_3_eixos,11.10
+107,Pedágio Registro,BR-116,SP,-24.4981,-47.8421,caminhao_4_eixos,14.80
+108,Pedágio Registro,BR-116,SP,-24.4981,-47.8421,caminhao_6_eixos,22.20
+109,Pedágio Cajati,BR-116,SP,-24.7312,-48.1189,moto,1.85
+110,Pedágio Cajati,BR-116,SP,-24.7312,-48.1189,carro,3.70
+111,Pedágio Cajati,BR-116,SP,-24.7312,-48.1189,caminhao_2_eixos,7.40
+112,Pedágio Cajati,BR-116,SP,-24.7312,-48.1189,caminhao_3_eixos,11.10
+113,Pedágio Cajati,BR-116,SP,-24.7312,-48.1189,caminhao_4_eixos,14.80
+114,Pedágio Cajati,BR-116,SP,-24.7312,-48.1189,caminhao_6_eixos,22.20
+115,Pedágio Barra do Turvo,BR-116,SP,-24.9651,-48.512,moto,1.85
+116,Pedágio Barra do Turvo,BR-116,SP,-24.9651,-48.512,carro,3.70
+117,Pedágio Barra do Turvo,BR-116,SP,-24.9651,-48.512,caminhao_2_eixos,7.40
+118,Pedágio Barra do Turvo,BR-116,SP,-24.9651,-48.512,caminhao_3_eixos,11.10
+119,Pedágio Barra do Turvo,BR-116,SP,-24.9651,-48.512,caminhao_4_eixos,14.80
+120,Pedágio Barra do Turvo,BR-116,SP,-24.9651,-48.512,caminhao_6_eixos,22.20
+121,Pedágio Campina Grande do Sul,BR-116,PR,-25.2912,-49.0512,moto,1.85
+122,Pedágio Campina Grande do Sul,BR-116,PR,-25.2912,-49.0512,carro,3.70
+123,Pedágio Campina Grande do Sul,BR-116,PR,-25.2912,-49.0512,caminhao_2_eixos,7.40
+124,Pedágio Campina Grande do Sul,BR-116,PR,-25.2912,-49.0512,caminhao_3_eixos,11.10
+125,Pedágio Campina Grande do Sul,BR-116,PR,-25.2912,-49.0512,caminhao_4_eixos,14.80
+126,Pedágio Campina Grande do Sul,BR-116,PR,-25.2912,-49.0512,caminhao_6_eixos,22.20
+127,Pedágio Campos dos Goytacazes,BR-101,RJ,-21.7541,-41.3289,moto,3.60
+128,Pedágio Campos dos Goytacazes,BR-101,RJ,-21.7541,-41.3289,carro,7.20
+129,Pedágio Campos dos Goytacazes,BR-101,RJ,-21.7541,-41.3289,caminhao_2_eixos,14.40
+130,Pedágio Campos dos Goytacazes,BR-101,RJ,-21.7541,-41.3289,caminhao_3_eixos,21.60
+131,Pedágio Campos dos Goytacazes,BR-101,RJ,-21.7541,-41.3289,caminhao_4_eixos,28.80
+132,Pedágio Campos dos Goytacazes,BR-101,RJ,-21.7541,-41.3289,caminhao_6_eixos,43.20
+133,Pedágio Conceição de Macabu,BR-101,RJ,-22.0831,-41.8651,moto,3.60
+134,Pedágio Conceição de Macabu,BR-101,RJ,-22.0831,-41.8651,carro,7.20
+135,Pedágio Conceição de Macabu,BR-101,RJ,-22.0831,-41.8651,caminhao_2_eixos,14.40
+136,Pedágio Conceição de Macabu,BR-101,RJ,-22.0831,-41.8651,caminhao_3_eixos,21.60
+137,Pedágio Conceição de Macabu,BR-101,RJ,-22.0831,-41.8651,caminhao_4_eixos,28.80
+138,Pedágio Conceição de Macabu,BR-101,RJ,-22.0831,-41.8651,caminhao_6_eixos,43.20
+139,Pedágio Casimiro de Abreu,BR-101,RJ,-22.4821,-42.2012,moto,3.60
+140,Pedágio Casimiro de Abreu,BR-101,RJ,-22.4821,-42.2012,carro,7.20
+141,Pedágio Casimiro de Abreu,BR-101,RJ,-22.4821,-42.2012,caminhao_2_eixos,14.40
+142,Pedágio Casimiro de Abreu,BR-101,RJ,-22.4821,-42.2012,caminhao_3_eixos,21.60
+143,Pedágio Casimiro de Abreu,BR-101,RJ,-22.4821,-42.2012,caminhao_4_eixos,28.80
+144,Pedágio Casimiro de Abreu,BR-101,RJ,-22.4821,-42.2012,caminhao_6_eixos,43.20
+145,Pedágio Rio Bonito,BR-101,RJ,-22.7112,-42.6281,moto,3.60
+146,Pedágio Rio Bonito,BR-101,RJ,-22.7112,-42.6281,carro,7.20
+147,Pedágio Rio Bonito,BR-101,RJ,-22.7112,-42.6281,caminhao_2_eixos,14.40
+148,Pedágio Rio Bonito,BR-101,RJ,-22.7112,-42.6281,caminhao_3_eixos,21.60
+149,Pedágio Rio Bonito,BR-101,RJ,-22.7112,-42.6281,caminhao_4_eixos,28.80
+150,Pedágio Rio Bonito,BR-101,RJ,-22.7112,-42.6281,caminhao_6_eixos,43.20
+151,Pedágio São Gonçalo,BR-101,RJ,-22.8211,-43.0421,moto,3.60
+152,Pedágio São Gonçalo,BR-101,RJ,-22.8211,-43.0421,carro,7.20
+153,Pedágio São Gonçalo,BR-101,RJ,-22.8211,-43.0421,caminhao_2_eixos,14.40
+154,Pedágio São Gonçalo,BR-101,RJ,-22.8211,-43.0421,caminhao_3_eixos,21.60
+155,Pedágio São Gonçalo,BR-101,RJ,-22.8211,-43.0421,caminhao_4_eixos,28.80
+156,Pedágio São Gonçalo,BR-101,RJ,-22.8211,-43.0421,caminhao_6_eixos,43.20
+157,Pedágio Pedro Canário,BR-101,ES,-18.3012,-39.9512,moto,2.30
+158,Pedágio Pedro Canário,BR-101,ES,-18.3012,-39.9512,carro,4.60
+159,Pedágio Pedro Canário,BR-101,ES,-18.3012,-39.9512,caminhao_2_eixos,9.20
+160,Pedágio Pedro Canário,BR-101,ES,-18.3012,-39.9512,caminhao_3_eixos,13.80
+161,Pedágio Pedro Canário,BR-101,ES,-18.3012,-39.9512,caminhao_4_eixos,18.40
+162,Pedágio Pedro Canário,BR-101,ES,-18.3012,-39.9512,caminhao_6_eixos,27.60
+163,Pedágio São Mateus,BR-101,ES,-18.7189,-39.8512,moto,2.60
+164,Pedágio São Mateus,BR-101,ES,-18.7189,-39.8512,carro,5.20
+165,Pedágio São Mateus,BR-101,ES,-18.7189,-39.8512,caminhao_2_eixos,10.40
+166,Pedágio São Mateus,BR-101,ES,-18.7189,-39.8512,caminhao_3_eixos,15.60
+167,Pedágio São Mateus,BR-101,ES,-18.7189,-39.8512,caminhao_4_eixos,20.80
+168,Pedágio São Mateus,BR-101,ES,-18.7189,-39.8512,caminhao_6_eixos,31.20
+169,Pedágio Aracruz,BR-101,ES,-19.821,-40.2712,moto,2.45
+170,Pedágio Aracruz,BR-101,ES,-19.821,-40.2712,carro,4.90
+171,Pedágio Aracruz,BR-101,ES,-19.821,-40.2712,caminhao_2_eixos,9.80
+172,Pedágio Aracruz,BR-101,ES,-19.821,-40.2712,caminhao_3_eixos,14.70
+173,Pedágio Aracruz,BR-101,ES,-19.821,-40.2712,caminhao_4_eixos,19.60
+174,Pedágio Aracruz,BR-101,ES,-19.821,-40.2712,caminhao_6_eixos,29.40
+175,Pedágio Serrafinha / Fundão,BR-101,ES,-19.9321,-40.4012,moto,2.25
+176,Pedágio Serrafinha / Fundão,BR-101,ES,-19.9321,-40.4012,carro,4.50
+177,Pedágio Serrafinha / Fundão,BR-101,ES,-19.9321,-40.4012,caminhao_2_eixos,9.00
+178,Pedágio Serrafinha / Fundão,BR-101,ES,-19.9321,-40.4012,caminhao_3_eixos,13.50
+179,Pedágio Serrafinha / Fundão,BR-101,ES,-19.9321,-40.4012,caminhao_4_eixos,18.00
+180,Pedágio Serrafinha / Fundão,BR-101,ES,-19.9321,-40.4012,caminhao_6_eixos,27.00
+181,Pedágio Guarapari,BR-101,ES,-20.6512,-40.5012,moto,2.40
+182,Pedágio Guarapari,BR-101,ES,-20.6512,-40.5012,carro,4.80
+183,Pedágio Guarapari,BR-101,ES,-20.6512,-40.5012,caminhao_2_eixos,9.60
+184,Pedágio Guarapari,BR-101,ES,-20.6512,-40.5012,caminhao_3_eixos,14.40
+185,Pedágio Guarapari,BR-101,ES,-20.6512,-40.5012,caminhao_4_eixos,19.20
+186,Pedágio Guarapari,BR-101,ES,-20.6512,-40.5012,caminhao_6_eixos,28.80
+187,Pedágio Itapemirim,BR-101,ES,-20.9912,-41.0121,moto,1.95
+188,Pedágio Itapemirim,BR-101,ES,-20.9912,-41.0121,carro,3.90
+189,Pedágio Itapemirim,BR-101,ES,-20.9912,-41.0121,caminhao_2_eixos,7.80
+190,Pedágio Itapemirim,BR-101,ES,-20.9912,-41.0121,caminhao_3_eixos,11.70
+191,Pedágio Itapemirim,BR-101,ES,-20.9912,-41.0121,caminhao_4_eixos,15.60
+192,Pedágio Itapemirim,BR-101,ES,-20.9912,-41.0121,caminhao_6_eixos,23.40
+193,Pedágio Mimoso do Sul,BR-101,ES,-21.1612,-41.3512,moto,1.90
+194,Pedágio Mimoso do Sul,BR-101,ES,-21.1612,-41.3512,carro,3.80
+195,Pedágio Mimoso do Sul,BR-101,ES,-21.1612,-41.3512,caminhao_2_eixos,7.60
+196,Pedágio Mimoso do Sul,BR-101,ES,-21.1612,-41.3512,caminhao_3_eixos,11.40
+197,Pedágio Mimoso do Sul,BR-101,ES,-21.1612,-41.3512,caminhao_4_eixos,15.20
+198,Pedágio Mimoso do Sul,BR-101,ES,-21.1612,-41.3512,caminhao_6_eixos,22.80
+199,Pedágio Cristalina,BR-040,GO,-16.7621,-47.612,moto,3.05
+200,Pedágio Cristalina,BR-040,GO,-16.7621,-47.612,carro,6.10
+201,Pedágio Cristalina,BR-040,GO,-16.7621,-47.612,caminhao_2_eixos,12.20
+202,Pedágio Cristalina,BR-040,GO,-16.7621,-47.612,caminhao_3_eixos,18.30
+203,Pedágio Cristalina,BR-040,GO,-16.7621,-47.612,caminhao_4_eixos,24.40
+204,Pedágio Cristalina,BR-040,GO,-16.7621,-47.612,caminhao_6_eixos,36.60
+205,Pedágio Paracatu,BR-040,MG,-17.221,-46.8812,moto,3.05
+206,Pedágio Paracatu,BR-040,MG,-17.221,-46.8812,carro,6.10
+207,Pedágio Paracatu,BR-040,MG,-17.221,-46.8812,caminhao_2_eixos,12.20
+208,Pedágio Paracatu,BR-040,MG,-17.221,-46.8812,caminhao_3_eixos,18.30
+209,Pedágio Paracatu,BR-040,MG,-17.221,-46.8812,caminhao_4_eixos,24.40
+210,Pedágio Paracatu,BR-040,MG,-17.221,-46.8812,caminhao_6_eixos,36.60
+211,Pedágio Lagoa Grande,BR-040,MG,-17.821,-46.521,moto,3.05
+212,Pedágio Lagoa Grande,BR-040,MG,-17.821,-46.521,carro,6.10
+213,Pedágio Lagoa Grande,BR-040,MG,-17.821,-46.521,caminhao_2_eixos,12.20
+214,Pedágio Lagoa Grande,BR-040,MG,-17.821,-46.521,caminhao_3_eixos,18.30
+215,Pedágio Lagoa Grande,BR-040,MG,-17.821,-46.521,caminhao_4_eixos,24.40
+216,Pedágio Lagoa Grande,BR-040,MG,-17.821,-46.521,caminhao_6_eixos,36.60
+217,Pedágio João Pinheiro,BR-040,MG,-18.212,-46.1712,moto,3.05
+218,Pedágio João Pinheiro,BR-040,MG,-18.212,-46.1712,carro,6.10
+219,Pedágio João Pinheiro,BR-040,MG,-18.212,-46.1712,caminhao_2_eixos,12.20
+220,Pedágio João Pinheiro,BR-040,MG,-18.212,-46.1712,caminhao_3_eixos,18.30
+221,Pedágio João Pinheiro,BR-040,MG,-18.212,-46.1712,caminhao_4_eixos,24.40
+222,Pedágio João Pinheiro,BR-040,MG,-18.212,-46.1712,caminhao_6_eixos,36.60
+223,Pedágio Felixlândia,BR-040,MG,-18.7512,-44.8912,moto,3.05
+224,Pedágio Felixlândia,BR-040,MG,-18.7512,-44.8912,carro,6.10
+225,Pedágio Felixlândia,BR-040,MG,-18.7512,-44.8912,caminhao_2_eixos,12.20
+226,Pedágio Felixlândia,BR-040,MG,-18.7512,-44.8912,caminhao_3_eixos,18.30
+227,Pedágio Felixlândia,BR-040,MG,-18.7512,-44.8912,caminhao_4_eixos,24.40
+228,Pedágio Felixlândia,BR-040,MG,-18.7512,-44.8912,caminhao_6_eixos,36.60
+229,Pedágio Inimutaba,BR-040,MG,-19.121,-44.3812,moto,3.05
+230,Pedágio Inimutaba,BR-040,MG,-19.121,-44.3812,carro,6.10
+231,Pedágio Inimutaba,BR-040,MG,-19.121,-44.3812,caminhao_2_eixos,12.20
+232,Pedágio Inimutaba,BR-040,MG,-19.121,-44.3812,caminhao_3_eixos,18.30
+233,Pedágio Inimutaba,BR-040,MG,-19.121,-44.3812,caminhao_4_eixos,24.40
+234,Pedágio Inimutaba,BR-040,MG,-19.121,-44.3812,caminhao_6_eixos,36.60
+235,Pedágio Sete Lagoas,BR-040,MG,-19.4512,-44.2412,moto,3.05
+236,Pedágio Sete Lagoas,BR-040,MG,-19.4512,-44.2412,carro,6.10
+237,Pedágio Sete Lagoas,BR-040,MG,-19.4512,-44.2412,caminhao_2_eixos,12.20
+238,Pedágio Sete Lagoas,BR-040,MG,-19.4512,-44.2412,caminhao_3_eixos,18.30
+239,Pedágio Sete Lagoas,BR-040,MG,-19.4512,-44.2412,caminhao_4_eixos,24.40
+240,Pedágio Sete Lagoas,BR-040,MG,-19.4512,-44.2412,caminhao_6_eixos,36.60
+241,Pedágio Barbacena,BR-040,MG,-21.221,-43.7712,moto,3.15
+242,Pedágio Barbacena,BR-040,MG,-21.221,-43.7712,carro,6.30
+243,Pedágio Barbacena,BR-040,MG,-21.221,-43.7712,caminhao_2_eixos,12.60
+244,Pedágio Barbacena,BR-040,MG,-21.221,-43.7712,caminhao_3_eixos,18.90
+245,Pedágio Barbacena,BR-040,MG,-21.221,-43.7712,caminhao_4_eixos,25.20
+246,Pedágio Barbacena,BR-040,MG,-21.221,-43.7712,caminhao_6_eixos,37.80
+247,Pedágio Simão Pereira,BR-040,MG,-21.9512,-43.312,moto,6.30
+248,Pedágio Simão Pereira,BR-040,MG,-21.9512,-43.312,carro,12.60
+249,Pedágio Simão Pereira,BR-040,MG,-21.9512,-43.312,caminhao_2_eixos,25.20
+250,Pedágio Simão Pereira,BR-040,MG,-21.9512,-43.312,caminhao_3_eixos,37.80
+251,Pedágio Simão Pereira,BR-040,MG,-21.9512,-43.312,caminhao_4_eixos,50.40
+252,Pedágio Simão Pereira,BR-040,MG,-21.9512,-43.312,caminhao_6_eixos,75.60
+253,Pedágio Areal,BR-040,RJ,-22.2312,-43.1512,moto,6.30
+254,Pedágio Areal,BR-040,RJ,-22.2312,-43.1512,carro,12.60
+255,Pedágio Areal,BR-040,RJ,-22.2312,-43.1512,caminhao_2_eixos,25.20
+256,Pedágio Areal,BR-040,RJ,-22.2312,-43.1512,caminhao_3_eixos,37.80
+257,Pedágio Areal,BR-040,RJ,-22.2312,-43.1512,caminhao_4_eixos,50.40
+258,Pedágio Areal,BR-040,RJ,-22.2312,-43.1512,caminhao_6_eixos,75.60
+259,Pedágio Duque de Caxias,BR-040,RJ,-22.7512,-43.2812,moto,6.30
+260,Pedágio Duque de Caxias,BR-040,RJ,-22.7512,-43.2812,carro,12.60
+261,Pedágio Duque de Caxias,BR-040,RJ,-22.7512,-43.2812,caminhao_2_eixos,25.20
+262,Pedágio Duque de Caxias,BR-040,RJ,-22.7512,-43.2812,caminhao_3_eixos,37.80
+263,Pedágio Duque de Caxias,BR-040,RJ,-22.7512,-43.2812,caminhao_4_eixos,50.40
+264,Pedágio Duque de Caxias,BR-040,RJ,-22.7512,-43.2812,caminhao_6_eixos,75.60
+265,Pedágio Ipameri,BR-050,GO,-17.712,-48.1512,moto,4.25
+266,Pedágio Ipameri,BR-050,GO,-17.712,-48.1512,carro,8.50
+267,Pedágio Ipameri,BR-050,GO,-17.712,-48.1512,caminhao_2_eixos,17.00
+268,Pedágio Ipameri,BR-050,GO,-17.712,-48.1512,caminhao_3_eixos,25.50
+269,Pedágio Ipameri,BR-050,GO,-17.712,-48.1512,caminhao_4_eixos,34.00
+270,Pedágio Ipameri,BR-050,GO,-17.712,-48.1512,caminhao_6_eixos,51.00
+271,Pedágio Campo Alegre de Goiás,BR-050,GO,-17.632,-47.7812,moto,4.50
+272,Pedágio Campo Alegre de Goiás,BR-050,GO,-17.632,-47.7812,carro,9.00
+273,Pedágio Campo Alegre de Goiás,BR-050,GO,-17.632,-47.7812,caminhao_2_eixos,18.00
+274,Pedágio Campo Alegre de Goiás,BR-050,GO,-17.632,-47.7812,caminhao_3_eixos,27.00
+275,Pedágio Campo Alegre de Goiás,BR-050,GO,-17.632,-47.7812,caminhao_4_eixos,36.00
+276,Pedágio Campo Alegre de Goiás,BR-050,GO,-17.632,-47.7812,caminhao_6_eixos,54.00
+277,Pedágio Araguari 1,BR-050,MG,-18.421,-48.1812,moto,3.40
+278,Pedágio Araguari 1,BR-050,MG,-18.421,-48.1812,carro,6.80
+279,Pedágio Araguari 1,BR-050,MG,-18.421,-48.1812,caminhao_2_eixos,13.60
+280,Pedágio Araguari 1,BR-050,MG,-18.421,-48.1812,caminhao_3_eixos,20.40
+281,Pedágio Araguari 1,BR-050,MG,-18.421,-48.1812,caminhao_4_eixos,27.20
+282,Pedágio Araguari 1,BR-050,MG,-18.421,-48.1812,caminhao_6_eixos,40.80
+283,Pedágio Araguari 2,BR-050,MG,-18.6512,-48.312,moto,2.60
+284,Pedágio Araguari 2,BR-050,MG,-18.6512,-48.312,carro,5.20
+285,Pedágio Araguari 2,BR-050,MG,-18.6512,-48.312,caminhao_2_eixos,10.40
+286,Pedágio Araguari 2,BR-050,MG,-18.6512,-48.312,caminhao_3_eixos,15.60
+287,Pedágio Araguari 2,BR-050,MG,-18.6512,-48.312,caminhao_4_eixos,20.80
+288,Pedágio Araguari 2,BR-050,MG,-18.6512,-48.312,caminhao_6_eixos,31.20
+289,Pedágio Uberaba,BR-050,MG,-19.7512,-47.9312,moto,3.80
+290,Pedágio Uberaba,BR-050,MG,-19.7512,-47.9312,carro,7.60
+291,Pedágio Uberaba,BR-050,MG,-19.7512,-47.9312,caminhao_2_eixos,15.20
+292,Pedágio Uberaba,BR-050,MG,-19.7512,-47.9312,caminhao_3_eixos,22.80
+293,Pedágio Uberaba,BR-050,MG,-19.7512,-47.9312,caminhao_4_eixos,30.40
+294,Pedágio Uberaba,BR-050,MG,-19.7512,-47.9312,caminhao_6_eixos,45.60
+295,Pedágio Delta,BR-050,MG,-19.9812,-47.7712,moto,2.70
+296,Pedágio Delta,BR-050,MG,-19.9812,-47.7712,carro,5.40
+297,Pedágio Delta,BR-050,MG,-19.9812,-47.7712,caminhao_2_eixos,10.80
+298,Pedágio Delta,BR-050,MG,-19.9812,-47.7712,caminhao_3_eixos,16.20
+299,Pedágio Delta,BR-050,MG,-19.9812,-47.7712,caminhao_4_eixos,21.60
+300,Pedágio Delta,BR-050,MG,-19.9812,-47.7712,caminhao_6_eixos,32.40
+301,Pedágio São José dos Pinhais,BR-376,PR,-25.612,-49.1812,moto,2.45
+302,Pedágio São José dos Pinhais,BR-376,PR,-25.612,-49.1812,carro,4.90
+303,Pedágio São José dos Pinhais,BR-376,PR,-25.612,-49.1812,caminhao_2_eixos,9.80
+304,Pedágio São José dos Pinhais,BR-376,PR,-25.612,-49.1812,caminhao_3_eixos,14.70
+305,Pedágio São José dos Pinhais,BR-376,PR,-25.612,-49.1812,caminhao_4_eixos,19.60
+306,Pedágio São José dos Pinhais,BR-376,PR,-25.612,-49.1812,caminhao_6_eixos,29.40
+307,Pedágio Garuva,BR-101,SC,-26.0312,-48.8512,moto,2.45
+308,Pedágio Garuva,BR-101,SC,-26.0312,-48.8512,carro,4.90
+309,Pedágio Garuva,BR-101,SC,-26.0312,-48.8512,caminhao_2_eixos,9.80
+310,Pedágio Garuva,BR-101,SC,-26.0312,-48.8512,caminhao_3_eixos,14.70
+311,Pedágio Garuva,BR-101,SC,-26.0312,-48.8512,caminhao_4_eixos,19.60
+312,Pedágio Garuva,BR-101,SC,-26.0312,-48.8512,caminhao_6_eixos,29.40
+313,Pedágio Araquari,BR-101,SC,-26.3812,-48.721,moto,2.45
+314,Pedágio Araquari,BR-101,SC,-26.3812,-48.721,carro,4.90
+315,Pedágio Araquari,BR-101,SC,-26.3812,-48.721,caminhao_2_eixos,9.80
+316,Pedágio Araquari,BR-101,SC,-26.3812,-48.721,caminhao_3_eixos,14.70
+317,Pedágio Araquari,BR-101,SC,-26.3812,-48.721,caminhao_4_eixos,19.60
+318,Pedágio Araquari,BR-101,SC,-26.3812,-48.721,caminhao_6_eixos,29.40
+319,Pedágio Porto Belo,BR-101,SC,-27.1512,-48.5912,moto,2.45
+320,Pedágio Porto Belo,BR-101,SC,-27.1512,-48.5912,carro,4.90
+321,Pedágio Porto Belo,BR-101,SC,-27.1512,-48.5912,caminhao_2_eixos,9.80
+322,Pedágio Porto Belo,BR-101,SC,-27.1512,-48.5912,caminhao_3_eixos,14.70
+323,Pedágio Porto Belo,BR-101,SC,-27.1512,-48.5912,caminhao_4_eixos,19.60
+324,Pedágio Porto Belo,BR-101,SC,-27.1512,-48.5912,caminhao_6_eixos,29.40
+325,Pedágio Palhoça,BR-101,SC,-27.6812,-48.6712,moto,2.45
+326,Pedágio Palhoça,BR-101,SC,-27.6812,-48.6712,carro,4.90
+327,Pedágio Palhoça,BR-101,SC,-27.6812,-48.6712,caminhao_2_eixos,9.80
+328,Pedágio Palhoça,BR-101,SC,-27.6812,-48.6712,caminhao_3_eixos,14.70
+329,Pedágio Palhoça,BR-101,SC,-27.6812,-48.6712,caminhao_4_eixos,19.60
+330,Pedágio Palhoça,BR-101,SC,-27.6812,-48.6712,caminhao_6_eixos,29.40
+331,Pedágio Laguna,BR-101,SC,-28.4812,-48.7812,moto,1.25
+332,Pedágio Laguna,BR-101,SC,-28.4812,-48.7812,carro,2.50
+333,Pedágio Laguna,BR-101,SC,-28.4812,-48.7812,caminhao_2_eixos,5.00
+334,Pedágio Laguna,BR-101,SC,-28.4812,-48.7812,caminhao_3_eixos,7.50
+335,Pedágio Laguna,BR-101,SC,-28.4812,-48.7812,caminhao_4_eixos,10.00
+336,Pedágio Laguna,BR-101,SC,-28.4812,-48.7812,caminhao_6_eixos,15.00
+337,Pedágio Tubarão,BR-101,SC,-28.5912,-49.012,moto,1.25
+338,Pedágio Tubarão,BR-101,SC,-28.5912,-49.012,carro,2.50
+339,Pedágio Tubarão,BR-101,SC,-28.5912,-49.012,caminhao_2_eixos,5.00
+340,Pedágio Tubarão,BR-101,SC,-28.5912,-49.012,caminhao_3_eixos,7.50
+341,Pedágio Tubarão,BR-101,SC,-28.5912,-49.012,caminhao_4_eixos,10.00
+342,Pedágio Tubarão,BR-101,SC,-28.5912,-49.012,caminhao_6_eixos,15.00
+343,Pedágio Araranguá,BR-101,SC,-28.9312,-49.4812,moto,1.25
+344,Pedágio Araranguá,BR-101,SC,-28.9312,-49.4812,carro,2.50
+345,Pedágio Araranguá,BR-101,SC,-28.9312,-49.4812,caminhao_2_eixos,5.00
+346,Pedágio Araranguá,BR-101,SC,-28.9312,-49.4812,caminhao_3_eixos,7.50
+347,Pedágio Araranguá,BR-101,SC,-28.9312,-49.4812,caminhao_4_eixos,10.00
+348,Pedágio Araranguá,BR-101,SC,-28.9312,-49.4812,caminhao_6_eixos,15.00
+349,Pedágio Passo de Torres,BR-101,SC,-29.312,-49.721,moto,1.25
+350,Pedágio Passo de Torres,BR-101,SC,-29.312,-49.721,carro,2.50
+351,Pedágio Passo de Torres,BR-101,SC,-29.312,-49.721,caminhao_2_eixos,5.00
+352,Pedágio Passo de Torres,BR-101,SC,-29.312,-49.721,caminhao_3_eixos,7.50
+353,Pedágio Passo de Torres,BR-101,SC,-29.312,-49.721,caminhao_4_eixos,10.00
+354,Pedágio Passo de Torres,BR-101,SC,-29.312,-49.721,caminhao_6_eixos,15.00
+355,Pedágio Gravataí,BR-290,RS,-29.9312,-50.9812,moto,2.90
+356,Pedágio Gravataí,BR-290,RS,-29.9312,-50.9812,carro,5.80
+357,Pedágio Gravataí,BR-290,RS,-29.9312,-50.9812,caminhao_2_eixos,11.60
+358,Pedágio Gravataí,BR-290,RS,-29.9312,-50.9812,caminhao_3_eixos,17.40
+359,Pedágio Gravataí,BR-290,RS,-29.9312,-50.9812,caminhao_4_eixos,23.20
+360,Pedágio Gravataí,BR-290,RS,-29.9312,-50.9812,caminhao_6_eixos,34.80
+361,Pedágio Santo Antônio da Patrulha,BR-290,RS,-29.8312,-50.512,moto,2.90
+362,Pedágio Santo Antônio da Patrulha,BR-290,RS,-29.8312,-50.512,carro,5.80
+363,Pedágio Santo Antônio da Patrulha,BR-290,RS,-29.8312,-50.512,caminhao_2_eixos,11.60
+364,Pedágio Santo Antônio da Patrulha,BR-290,RS,-29.8312,-50.512,caminhao_3_eixos,17.40
+365,Pedágio Santo Antônio da Patrulha,BR-290,RS,-29.8312,-50.512,caminhao_4_eixos,23.20
+366,Pedágio Santo Antônio da Patrulha,BR-290,RS,-29.8312,-50.512,caminhao_6_eixos,34.80
+367,Pedágio Montenegro,BR-386,RS,-29.6812,-51.4612,moto,2.90
+368,Pedágio Montenegro,BR-386,RS,-29.6812,-51.4612,carro,5.80
+369,Pedágio Montenegro,BR-386,RS,-29.6812,-51.4612,caminhao_2_eixos,11.60
+370,Pedágio Montenegro,BR-386,RS,-29.6812,-51.4612,caminhao_3_eixos,17.40
+371,Pedágio Montenegro,BR-386,RS,-29.6812,-51.4612,caminhao_4_eixos,23.20
+372,Pedágio Montenegro,BR-386,RS,-29.6812,-51.4612,caminhao_6_eixos,34.80
+373,Pedágio Paverama,BR-386,RS,-29.5512,-51.721,moto,2.90
+374,Pedágio Paverama,BR-386,RS,-29.5512,-51.721,carro,5.80
+375,Pedágio Paverama,BR-386,RS,-29.5512,-51.721,caminhao_2_eixos,11.60
+376,Pedágio Paverama,BR-386,RS,-29.5512,-51.721,caminhao_3_eixos,17.40
+377,Pedágio Paverama,BR-386,RS,-29.5512,-51.721,caminhao_4_eixos,23.20
+378,Pedágio Paverama,BR-386,RS,-29.5512,-51.721,caminhao_6_eixos,34.80
+379,Pedágio Fontoura Xavier,BR-386,RS,-28.9812,-52.3512,moto,2.90
+380,Pedágio Fontoura Xavier,BR-386,RS,-28.9812,-52.3512,carro,5.80
+381,Pedágio Fontoura Xavier,BR-386,RS,-28.9812,-52.3512,caminhao_2_eixos,11.60
+382,Pedágio Fontoura Xavier,BR-386,RS,-28.9812,-52.3512,caminhao_3_eixos,17.40
+383,Pedágio Fontoura Xavier,BR-386,RS,-28.9812,-52.3512,caminhao_4_eixos,23.20
+384,Pedágio Fontoura Xavier,BR-386,RS,-28.9812,-52.3512,caminhao_6_eixos,34.80
+385,Pedágio Victor Graeff,BR-386,RS,-28.5612,-52.6812,moto,2.90
+386,Pedágio Victor Graeff,BR-386,RS,-28.5612,-52.6812,carro,5.80
+387,Pedágio Victor Graeff,BR-386,RS,-28.5612,-52.6812,caminhao_2_eixos,11.60
+388,Pedágio Victor Graeff,BR-386,RS,-28.5612,-52.6812,caminhao_3_eixos,17.40
+389,Pedágio Victor Graeff,BR-386,RS,-28.5612,-52.6812,caminhao_4_eixos,23.20
+390,Pedágio Victor Graeff,BR-386,RS,-28.5612,-52.6812,caminhao_6_eixos,34.80
+391,Pedágio Professor Jamil,BR-153,GO,-17.2512,-49.2412,moto,3.55
+392,Pedágio Professor Jamil,BR-153,GO,-17.2512,-49.2412,carro,7.10
+393,Pedágio Professor Jamil,BR-153,GO,-17.2512,-49.2412,caminhao_2_eixos,14.20
+394,Pedágio Professor Jamil,BR-153,GO,-17.2512,-49.2412,caminhao_3_eixos,21.30
+395,Pedágio Professor Jamil,BR-153,GO,-17.2512,-49.2412,caminhao_4_eixos,28.40
+396,Pedágio Professor Jamil,BR-153,GO,-17.2512,-49.2412,caminhao_6_eixos,42.60
+397,Pedágio Goiatuba,BR-153,GO,-18.012,-49.3512,moto,3.55
+398,Pedágio Goiatuba,BR-153,GO,-18.012,-49.3512,carro,7.10
+399,Pedágio Goiatuba,BR-153,GO,-18.012,-49.3512,caminhao_2_eixos,14.20
+400,Pedágio Goiatuba,BR-153,GO,-18.012,-49.3512,caminhao_3_eixos,21.30
+401,Pedágio Goiatuba,BR-153,GO,-18.012,-49.3512,caminhao_4_eixos,28.40
+402,Pedágio Goiatuba,BR-153,GO,-18.012,-49.3512,caminhao_6_eixos,42.60
+403,Pedágio Itumbiara,BR-153,GO,-18.412,-49.212,moto,3.55
+404,Pedágio Itumbiara,BR-153,GO,-18.412,-49.212,carro,7.10
+405,Pedágio Itumbiara,BR-153,GO,-18.412,-49.212,caminhao_2_eixos,14.20
+406,Pedágio Itumbiara,BR-153,GO,-18.412,-49.212,caminhao_3_eixos,21.30
+407,Pedágio Itumbiara,BR-153,GO,-18.412,-49.212,caminhao_4_eixos,28.40
+408,Pedágio Itumbiara,BR-153,GO,-18.412,-49.212,caminhao_6_eixos,42.60
+409,Pedágio Prata,BR-153,MG,-19.312,-48.921,moto,3.20
+410,Pedágio Prata,BR-153,MG,-19.312,-48.921,carro,6.40
+411,Pedágio Prata,BR-153,MG,-19.312,-48.921,caminhao_2_eixos,12.80
+412,Pedágio Prata,BR-153,MG,-19.312,-48.921,caminhao_3_eixos,19.20
+413,Pedágio Prata,BR-153,MG,-19.312,-48.921,caminhao_4_eixos,25.60
+414,Pedágio Prata,BR-153,MG,-19.312,-48.921,caminhao_6_eixos,38.40
+415,Pedágio Comendador Gomes,BR-153,MG,-19.7512,-48.8812,moto,3.20
+416,Pedágio Comendador Gomes,BR-153,MG,-19.7512,-48.8812,carro,6.40
+417,Pedágio Comendador Gomes,BR-153,MG,-19.7512,-48.8812,caminhao_2_eixos,12.80
+418,Pedágio Comendador Gomes,BR-153,MG,-19.7512,-48.8812,caminhao_3_eixos,19.20
+419,Pedágio Comendador Gomes,BR-153,MG,-19.7512,-48.8812,caminhao_4_eixos,25.60
+420,Pedágio Comendador Gomes,BR-153,MG,-19.7512,-48.8812,caminhao_6_eixos,38.40
+421,Pedágio Fronteira,BR-153,MG,-20.2512,-49.1812,moto,3.20
+422,Pedágio Fronteira,BR-153,MG,-20.2512,-49.1812,carro,6.40
+423,Pedágio Fronteira,BR-153,MG,-20.2512,-49.1812,caminhao_2_eixos,12.80
+424,Pedágio Fronteira,BR-153,MG,-20.2512,-49.1812,caminhao_3_eixos,19.20
+425,Pedágio Fronteira,BR-153,MG,-20.2512,-49.1812,caminhao_4_eixos,25.60
+426,Pedágio Fronteira,BR-153,MG,-20.2512,-49.1812,caminhao_6_eixos,38.40
+427,Pedágio Mundo Novo,BR-163,MS,-23.9312,-54.2812,moto,3.10
+428,Pedágio Mundo Novo,BR-163,MS,-23.9312,-54.2812,carro,6.20
+429,Pedágio Mundo Novo,BR-163,MS,-23.9312,-54.2812,caminhao_2_eixos,12.40
+430,Pedágio Mundo Novo,BR-163,MS,-23.9312,-54.2812,caminhao_3_eixos,18.60
+431,Pedágio Mundo Novo,BR-163,MS,-23.9312,-54.2812,caminhao_4_eixos,24.80
+432,Pedágio Mundo Novo,BR-163,MS,-23.9312,-54.2812,caminhao_6_eixos,37.20
+433,Pedágio Itaquiraí,BR-163,MS,-23.4812,-54.1812,moto,4.20
+434,Pedágio Itaquiraí,BR-163,MS,-23.4812,-54.1812,carro,8.40
+435,Pedágio Itaquiraí,BR-163,MS,-23.4812,-54.1812,caminhao_2_eixos,16.80
+436,Pedágio Itaquiraí,BR-163,MS,-23.4812,-54.1812,caminhao_3_eixos,25.20
+437,Pedágio Itaquiraí,BR-163,MS,-23.4812,-54.1812,caminhao_4_eixos,33.60
+438,Pedágio Itaquiraí,BR-163,MS,-23.4812,-54.1812,caminhao_6_eixos,50.40
+439,Pedágio Caarapó,BR-163,MS,-22.6312,-54.821,moto,4.05
+440,Pedágio Caarapó,BR-163,MS,-22.6312,-54.821,carro,8.10
+441,Pedágio Caarapó,BR-163,MS,-22.6312,-54.821,caminhao_2_eixos,16.20
+442,Pedágio Caarapó,BR-163,MS,-22.6312,-54.821,caminhao_3_eixos,24.30
+443,Pedágio Caarapó,BR-163,MS,-22.6312,-54.821,caminhao_4_eixos,32.40
+444,Pedágio Caarapó,BR-163,MS,-22.6312,-54.821,caminhao_6_eixos,48.60
+445,Pedágio Rio Brilhante,BR-163,MS,-21.8012,-54.5512,moto,4.40
+446,Pedágio Rio Brilhante,BR-163,MS,-21.8012,-54.5512,carro,8.80
+447,Pedágio Rio Brilhante,BR-163,MS,-21.8012,-54.5512,caminhao_2_eixos,17.60
+448,Pedágio Rio Brilhante,BR-163,MS,-21.8012,-54.5512,caminhao_3_eixos,26.40
+449,Pedágio Rio Brilhante,BR-163,MS,-21.8012,-54.5512,caminhao_4_eixos,35.20
+450,Pedágio Rio Brilhante,BR-163,MS,-21.8012,-54.5512,caminhao_6_eixos,52.80
+451,Pedágio Campo Grande,BR-163,MS,-20.4512,-54.621,moto,4.45
+452,Pedágio Campo Grande,BR-163,MS,-20.4512,-54.621,carro,8.90
+453,Pedágio Campo Grande,BR-163,MS,-20.4512,-54.621,caminhao_2_eixos,17.80
+454,Pedágio Campo Grande,BR-163,MS,-20.4512,-54.621,caminhao_3_eixos,26.70
+455,Pedágio Campo Grande,BR-163,MS,-20.4512,-54.621,caminhao_4_eixos,35.60
+456,Pedágio Campo Grande,BR-163,MS,-20.4512,-54.621,caminhao_6_eixos,53.40
+457,Pedágio Jaraguari,BR-163,MS,-20.121,-54.3812,moto,3.55
+458,Pedágio Jaraguari,BR-163,MS,-20.121,-54.3812,carro,7.10
+459,Pedágio Jaraguari,BR-163,MS,-20.121,-54.3812,caminhao_2_eixos,14.20
+460,Pedágio Jaraguari,BR-163,MS,-20.121,-54.3812,caminhao_3_eixos,21.30
+461,Pedágio Jaraguari,BR-163,MS,-20.121,-54.3812,caminhao_4_eixos,28.40
+462,Pedágio Jaraguari,BR-163,MS,-20.121,-54.3812,caminhao_6_eixos,42.60
+463,Pedágio São Gabriel do Oeste,BR-163,MS,-19.3812,-54.5812,moto,3.60
+464,Pedágio São Gabriel do Oeste,BR-163,MS,-19.3812,-54.5812,carro,7.20
+465,Pedágio São Gabriel do Oeste,BR-163,MS,-19.3812,-54.5812,caminhao_2_eixos,14.40
+466,Pedágio São Gabriel do Oeste,BR-163,MS,-19.3812,-54.5812,caminhao_3_eixos,21.60
+467,Pedágio São Gabriel do Oeste,BR-163,MS,-19.3812,-54.5812,caminhao_4_eixos,28.80
+468,Pedágio São Gabriel do Oeste,BR-163,MS,-19.3812,-54.5812,caminhao_6_eixos,43.20
+469,Pedágio Rio Verde de Mato Grosso,BR-163,MS,-18.912,-54.8412,moto,4.55
+470,Pedágio Rio Verde de Mato Grosso,BR-163,MS,-18.912,-54.8412,carro,9.10
+471,Pedágio Rio Verde de Mato Grosso,BR-163,MS,-18.912,-54.8412,caminhao_2_eixos,18.20
+472,Pedágio Rio Verde de Mato Grosso,BR-163,MS,-18.912,-54.8412,caminhao_3_eixos,27.30
+473,Pedágio Rio Verde de Mato Grosso,BR-163,MS,-18.912,-54.8412,caminhao_4_eixos,36.40
+474,Pedágio Rio Verde de Mato Grosso,BR-163,MS,-18.912,-54.8412,caminhao_6_eixos,54.60
+475,Pedágio Pedro Gomes / Coxim,BR-163,MS,-18.5012,-54.7512,moto,4.15
+476,Pedágio Pedro Gomes / Coxim,BR-163,MS,-18.5012,-54.7512,carro,8.30
+477,Pedágio Pedro Gomes / Coxim,BR-163,MS,-18.5012,-54.7512,caminhao_2_eixos,16.60
+478,Pedágio Pedro Gomes / Coxim,BR-163,MS,-18.5012,-54.7512,caminhao_3_eixos,24.90
+479,Pedágio Pedro Gomes / Coxim,BR-163,MS,-18.5012,-54.7512,caminhao_4_eixos,33.20
+480,Pedágio Pedro Gomes / Coxim,BR-163,MS,-18.5012,-54.7512,caminhao_6_eixos,49.80
