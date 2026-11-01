@@ -32,17 +32,26 @@ CATS = ["uf", "br", "dia_semana", "fase_dia", "condicao_metereologica", "tipo_pi
 NUMS = ["hora", "mes", "km"]
 DIAS = ["segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado", "domingo"]
 
+ANOS_ANALISE = tuple(range(2021, 2026))
+ANOS_TREINO = tuple(range(2021, 2025))
+ANO_TESTE = 2025
 
 # ---------------------------------------------------------------- dados
 def carregar(pasta="data"):
-    anos_analise = range(2021, 2026)
     arqs = [
         os.path.join(pasta, f"datatran{ano}.csv")
-        for ano in anos_analise
+        for ano in ANOS_ANALISE
     ]
-    if not arqs:
-        raise SystemExit("Coloque os CSVs datatran*.csv da PRF na pasta data/")
+
+    faltantes = [a for a in arqs if not os.path.exists(a)]
+
+    if faltantes:
+        nomes = ", ".join(os.path.basename(a) for a in faltantes)
+        raise SystemExit(
+            f"Arquivos da PRF não encontrados em data/: {nomes}"
+        )
     dfs = []
+    
     for a in arqs:
         try:
             dfs.append(pd.read_csv(a, sep=";", encoding="utf-8", decimal=",", low_memory=False))
@@ -61,8 +70,42 @@ def carregar(pasta="data"):
     d["hora"] = pd.to_numeric(d.horario.astype(str).str[:2], errors="coerce").fillna(0).astype(int)
     d["mes"] = d.data.dt.month
     d["br"] = d.br.astype(int).astype(str)
-    d["grave"] = ((d.mortos > 0) | (d.feridos_graves > 0) | (d.classificacao_acidente == "Com Vítimas Fatais")).astype(int)
-    d["ups"] = np.where(d.mortos > 0, 13, np.where(d.feridos > 0, 4, 1))   # UPS (DNIT): 1 / 4 / 13
+
+    classificacao = (
+        d["classificacao_acidente"]
+        .fillna("")
+        .astype(str)
+        .str.strip()
+        .str.lower()
+    )
+
+    # Alvo do modelo:
+    # 1 = acidente com morte ou ferido grave
+    # 0 = demais acidentes
+    d["grave"] = (
+        (d["mortos"] > 0)
+        | (d["feridos_graves"] > 0)
+        | classificacao.str.contains("fata", na=False)
+    ).astype(int)
+
+    # Unidade Padrão de Severidade:
+    # sem vítimas = 1; com vítimas = 5; com óbitos = 13
+    tem_obito = (
+        (d["mortos"] > 0)
+        | classificacao.str.contains("fata", na=False)
+    )
+
+    tem_vitima = (
+        (d["feridos"] > 0)
+        | classificacao.str.contains("ferid", na=False)
+    )
+
+    d["ups"] = np.select(
+        [tem_obito, tem_vitima],
+        [13,5],
+        default=1,
+    ).astype(int)
+    
     if "municipio" not in d:
         d["municipio"] = ""
     d["municipio"] = d.municipio.fillna("").astype(str)
@@ -72,24 +115,28 @@ def carregar(pasta="data"):
     return d[list(dict.fromkeys(keep))].reset_index(drop=True)
 
 
-MODEL_VERSION = 5
+MODEL_VERSION = 6
 
 
 def treinar(d):
-    """Compara 3 modelos (corte temporal 80/20, com amostragem para bases grandes) e devolve o melhor."""
+    """Compara modelos usando 2021-2024 para treino e 2025 para teste temporal."""
     rng = np.random.RandomState(0)
     X, y = d[CATS + NUMS], d.grave.values
+
     anos = d["data"].dt.year
+
     ante = np.flatnonzero(
-        anos.between(2021, 2024).values
+        anos.isin(ANOS_TREINO).values
     )
+
     post = np.flatnonzero(
-        (anos == 2025).values
+        (anos == ANO_TESTE).values
     )
+
     if len(ante) == 0 or len(post) == 0:
         raise ValueError(
-            "Para o treinamento são necessários dados de 2021 a 2024 "
-            "e dados de 2025 para teste."
+            f"São necessários dados de {ANOS_TREINO[0]} a {ANOS_TREINO[-1]} "
+            f"para treinamento e dados de {ANO_TESTE} para teste."
         )
     tr = rng.choice(ante, min(len(ante), 150_000), replace=False)
     te = rng.choice(post, min(len(post), 60_000), replace=False)
@@ -112,14 +159,27 @@ def treinar(d):
     melhor = max(auc, key=auc.get)
     todos = rng.choice(len(d), min(len(d), 250_000), replace=False)
     final = cand[melhor]().fit(X.iloc[todos], y[todos])
-    info = {"auc_teste": auc, "escolhido": melhor, "taxa_base_graves": round(float(y.mean()), 4),
-            "registros": int(len(d)), "periodo": [str(d.data.min().date()), str(d.data.max().date())]}
+    info = {
+        "auc_teste": auc,
+        "escolhido": melhor,
+        "taxa_base_graves": round(float(y.mean()), 4),
+        "registros": int(len(d)),
+        "periodo": [
+            str(d.data.min().date()),
+            str(d.data.max().date())
+        ],
+        "periodo_treino": f"{ANOS_TREINO[0]}-{ANOS_TREINO[-1]}",
+        "periodo_teste": str(ANO_TESTE),
+    }
     return final, info
 
 
 def modelo_com_cache(d, pasta="data"):
     """Treina uma vez e guarda em .cache/; so retreina se os CSVs mudarem."""
-    arqs = sorted(glob.glob(os.path.join(pasta, "datatran*.csv")))
+    arqs = [
+        os.path.join(pasta, f"datatran{ano}.csv")
+        for ano in ANOS_ANALISE
+    ]
     sig = hashlib.md5(json.dumps([[os.path.basename(a), os.path.getsize(a), os.stat(a).st_mtime_ns] for a in arqs]
                                  + [MODEL_VERSION, sklearn.__version__]).encode()).hexdigest()[:12]
     arq = os.path.join(".cache", f"modelo_{sig}.joblib")
