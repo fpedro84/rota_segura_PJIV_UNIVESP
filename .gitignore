@@ -1,2 +1,5 @@
 # Bases públicas da PRF
 data/datatran*.csv
+
+# Cache local do modelo
+.cache/
