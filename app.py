@@ -27,8 +27,7 @@ NOMINATIM_EMAIL = os.getenv("NOMINATIM_EMAIL", "")                              
 UA = "RotaSegura-PI-UNIVESP/1.0" + (f" ({NOMINATIM_EMAIL})" if NOMINATIM_EMAIL else "")
 RAIO_M = int(os.getenv("RAIO_CORREDOR_M", "150"))
 PEDAGIO_RAIO_M = int(os.getenv("PEDAGIO_RAIO_M", "500"))   # praça conta se estiver a ate X m da rota
-LIM_BAIXO, LIM_ALTO = 0.8, 1.5          # razao vs. media nacional (UPS/km)
-CATS = ["uf", "br", "dia_semana", "fase_dia", "condicao_metereologica", "tipo_pista"]
+CATS = ["uf", "br", "dia_semana", "fase_dia", "tipo_pista"]
 NUMS = ["hora", "mes", "km"]
 DIAS = ["segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado", "domingo"]
 
@@ -115,8 +114,7 @@ def carregar(pasta="data"):
     return d[list(dict.fromkeys(keep))].reset_index(drop=True)
 
 
-MODEL_VERSION = 6
-
+MODEL_VERSION = 7
 
 def treinar(d):
     """Compara modelos usando 2021-2024 para treino e 2025 para teste temporal."""
@@ -204,7 +202,6 @@ MODELO, INFO, _P = modelo_com_cache(D)
 D["p"] = _P                                              # P(grave) por acidente, usada no painel
 print("Modelos (AUC no teste):", INFO["auc_teste"], "->", INFO["escolhido"])
 TREE = BallTree(np.radians(D[["latitude", "longitude"]].values), metric="haversine")
-UPS_KM_NACIONAL = D.ups.sum() / D.groupby(["br", "uf"]).km.max().clip(lower=10).sum()   # media por km de BR/UF (km reinicia por UF)
 
 
 # ---------------------------------------------------------------- pedagios (ANTT)
@@ -290,8 +287,12 @@ def p_nacional(hora, dia, mes):
 
 def _prever(m, hora, dia, mes):
     X = m[CATS + NUMS].copy()
-    X["hora"], X["mes"], X["dia_semana"] = hora, mes, DIAS[dia]
-    X["fase_dia"], X["condicao_metereologica"] = fase_dia(hora), "Céu Claro"
+
+    X["hora"] = hora
+    X["mes"] = mes
+    X["dia_semana"] = DIAS[dia]
+    X["fase_dia"] = fase_dia(hora)
+
     return MODELO.predict_proba(X)[:, 1]
 
 
@@ -300,8 +301,15 @@ def analisar(poly, dist_km, hora, dia, mes):
     achados = TREE.query_radius(np.radians(pts), RAIO_M / 6371000.0)
     achados = [a for a in achados if len(a)]
     m = D.iloc[np.unique(np.concatenate(achados))] if achados else D.iloc[0:0]
-    razao = (m.ups.sum() / max(dist_km, 1)) / UPS_KM_NACIONAL
-    classe = "Baixo" if razao <= LIM_BAIXO else "Médio" if razao <= LIM_ALTO else "Alto"
+    ups_total = float(m.ups.sum())
+    ups_por_100km = (
+        ups_total / max(dist_km, 1) * 100
+    )
+    ups_medio_acidente = (
+        float(m.ups.mean())
+        if len(m)
+        else None
+    )
     crit = []
     if len(m):
         g = m.assign(faixa=(m.km // 25 * 25).astype(int)).groupby(["br", "uf", "faixa"])
@@ -311,12 +319,39 @@ def analisar(poly, dist_km, hora, dia, mes):
                          "acidentes": int(r.n), "mortes": int(r.mortes)})
     p = float(_prever(m, hora, dia, mes).mean()) if len(m) else None
     graves = m[m.grave == 1].head(400)
-    return {"acidentes": int(len(m)), "acidentes_com_mortes": int((m.mortos > 0).sum()), "mortos": int(m.mortos.sum()),
-            "feridos": int(m.feridos.sum()), "ups": int(m.ups.sum()),
-            "acidentes_100km": round(len(m) / max(dist_km, 1) * 100, 1),
-            "razao_media_nacional": round(float(razao), 2), "classe": classe,
-            "p_grave_modelo": None if p is None else round(p, 4), "p_grave_nacional": round(p_nacional(hora, dia, mes), 4),
-            "trechos_criticos": crit, "graves": graves[["latitude", "longitude"]].round(5).values.tolist()}
+    return {
+        "acidentes": int(len(m)),
+        "acidentes_com_mortes": int((m.mortos > 0).sum()),
+        "mortos": int(m.mortos.sum()),
+        "feridos": int(m.feridos.sum()),
+        "ups": int(ups_total),
+        "acidentes_100km": round(
+            len(m) / max(dist_km, 1) * 100,
+            1
+        ),
+        "ups_por_100km": round(
+            ups_por_100km,
+            2
+        ),
+        "ups_medio_acidente": (
+            None
+            if ups_medio_acidente is None
+            else round(ups_medio_acidente, 2)
+        ),
+        "p_grave_modelo": (
+            None
+            if p is None
+            else round(p, 4)
+        ),
+        "p_grave_nacional": round(
+            p_nacional(hora, dia, mes),
+            4
+        ),
+        "trechos_criticos": crit,
+        "graves": graves[
+            ["latitude", "longitude"]
+        ].round(5).values.tolist()
+    }
 
 
 # ---------------------------------------------------------------- rotas (OpenStreetMap)
@@ -405,12 +440,26 @@ def api_rota():
         r["pedagio"] = pedagios_na_rota(adensificar(decodificar(r["polyline"])), cat)
     rapida = min(rotas, key=lambda r: r["duracao_min"])
     curta = min(rotas, key=lambda r: r["distancia_km"])
-    segura = min(rotas, key=lambda r: r["risco"]["razao_media_nacional"])
+    menor_severidade = min(
+        rotas,
+        key=lambda r: r["risco"]["ups_por_100km"]
+    )
     totais = {r["pedagio"]["total"] for r in rotas if r["pedagio"]}
     barata = min((r for r in rotas if r["pedagio"]), key=lambda r: r["pedagio"]["total"], default=None) if len(totais) > 1 else None
     for r in rotas:
-        r["rotulos"] = [t for t, c in (("mais rápida", r is rapida), ("mais curta", r is curta), ("menor risco", r is segura),
-                                      ("menor pedágio", r is barata)) if c]
+        r["rotulos"] = [
+            t
+            for t, c in (
+                ("mais rápida", r is rapida),
+                ("mais curta", r is curta),
+                (
+                    "menor severidade histórica",
+                    r is menor_severidade
+                ),
+                ("menor pedágio", r is barata),
+            )
+            if c
+        ]
     return jsonify(rotas=rotas, referencia=ref.isoformat(timespec="minutes"))
 
 
