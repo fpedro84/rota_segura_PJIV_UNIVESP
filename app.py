@@ -35,7 +35,11 @@ DIAS = ["segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-
 
 # ---------------------------------------------------------------- dados
 def carregar(pasta="data"):
-    arqs = sorted(glob.glob(os.path.join(pasta, "datatran*.csv")))
+    anos_analise = range(2021, 2026)
+    arqs = [
+        os.path.join(pasta, f"datatran{ano}.csv")
+        for ano in anos_analise
+    ]
     if not arqs:
         raise SystemExit("Coloque os CSVs datatran*.csv da PRF na pasta data/")
     dfs = []
@@ -68,15 +72,25 @@ def carregar(pasta="data"):
     return d[list(dict.fromkeys(keep))].reset_index(drop=True)
 
 
-MODEL_VERSION = 4
+MODEL_VERSION = 5
 
 
 def treinar(d):
     """Compara 3 modelos (corte temporal 80/20, com amostragem para bases grandes) e devolve o melhor."""
     rng = np.random.RandomState(0)
     X, y = d[CATS + NUMS], d.grave.values
-    ante = np.flatnonzero((d.data <= d.data.quantile(0.8)).values)
-    post = np.flatnonzero((d.data > d.data.quantile(0.8)).values)
+    anos = d["data"].dt.year
+    ante = np.flatnonzero(
+        anos.between(2021, 2024).values
+    )
+    post = np.flatnonzero(
+        (anos == 2025).values
+    )
+    if len(ante) == 0 or len(post) == 0:
+        raise ValueError(
+            "Para o treinamento são necessários dados de 2021 a 2024 "
+            "e dados de 2025 para teste."
+        )
     tr = rng.choice(ante, min(len(ante), 150_000), replace=False)
     te = rng.choice(post, min(len(post), 60_000), replace=False)
     oh = lambda: ColumnTransformer([("c", OneHotEncoder(handle_unknown="ignore", dtype=np.float32), CATS), ("n", StandardScaler(), NUMS)])
@@ -353,7 +367,7 @@ def _dados_gz():
     mo = d.data.dt.year * 12 + d.data.dt.month - 1
     cols = {"brs": brs, "ufs": ufs, "br": pd.Categorical(d.br, categories=brs).codes.tolist(),
             "uf": pd.Categorical(d.uf, categories=ufs).codes.tolist(), "km": d.km.round(1).tolist(),
-            "bin": np.minimum(5, d.hora // 4).tolist(), "dow": ((d.data.dt.dayofweek + 1) % 7).tolist(),
+            "bin": np.minimum(5, d.hora // 4).tolist(), "dow": ((d.data.dt.day_of_week + 1) % 7).tolist(),
             "mo0": int(mo.min()), "mo": (mo - mo.min()).tolist(), "g": d.grave.tolist(), "m": (d.mortos > 0).astype(int).tolist(),
             "fe": d.feridos.astype(int).tolist(), "lat": d.latitude.round(3).tolist(), "lon": d.longitude.round(3).tolist(),
             "p": d.p.round(3).tolist(), "info": INFO, "fonte": f"PRF datatran ({INFO['periodo'][0]} a {INFO['periodo'][1]})"}
