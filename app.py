@@ -114,7 +114,7 @@ def carregar(pasta="data"):
     return d[list(dict.fromkeys(keep))].reset_index(drop=True)
 
 
-MODEL_VERSION = 7
+MODEL_VERSION = 8
 
 def treinar(d):
     """Compara modelos usando 2021-2024 para treino e 2025 para teste temporal."""
@@ -280,12 +280,12 @@ def fase_dia(h):
     return "Amanhecer" if h in (5,) else "Pleno dia" if 6 <= h < 18 else "Anoitecer" if h == 18 else "Plena Noite"
 
 
-@lru_cache(maxsize=256)
-def p_nacional(hora, dia, mes):
-    return float(_prever(D.sample(min(4000, len(D)), random_state=0), hora, dia, mes).mean())
 
-
-def _prever(m, hora, dia, mes):
+def prever_gravidade_condicional(m, hora, dia, mes):
+    """
+    Estima a probabilidade de um acidente ser grave, caso ocorra,
+    considerando o contexto histórico do corredor e o período informado.
+    """
     X = m[CATS + NUMS].copy()
 
     X["hora"] = hora
@@ -317,7 +317,18 @@ def analisar(poly, dist_km, hora, dia, mes):
         for (br, uf, _), r in t[t.n >= 5].sort_values("ups", ascending=False).head(3).iterrows():
             crit.append({"br": br, "uf": uf, "km_ini": int(r.k0), "km_fim": max(int(np.ceil(r.k1)), int(r.k0) + 1),
                          "acidentes": int(r.n), "mortes": int(r.mortes)})
-    p = float(_prever(m, hora, dia, mes).mean()) if len(m) else None
+    prob_gravidade = (
+        float(
+            prever_gravidade_condicional(
+                m,
+                hora,
+                dia,
+                mes
+            ).mean()
+        )
+        if len(m)
+        else None
+    )
     graves = m[m.grave == 1].head(400)
     return {
         "acidentes": int(len(m)),
@@ -338,14 +349,10 @@ def analisar(poly, dist_km, hora, dia, mes):
             if ups_medio_acidente is None
             else round(ups_medio_acidente, 2)
         ),
-        "p_grave_modelo": (
+        "prob_gravidade_condicional": (
             None
-            if p is None
-            else round(p, 4)
-        ),
-        "p_grave_nacional": round(
-            p_nacional(hora, dia, mes),
-            4
+            if prob_gravidade is None
+            else round(prob_gravidade, 4)
         ),
         "trechos_criticos": crit,
         "graves": graves[

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rota Segura | Painel de Análise de Risco</title>
+<title>Rota Segura | Painel de Análise de Acidentes</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='routesafe.css') }}">
 <style>
@@ -50,7 +50,7 @@ footer{font-size:12px;color:var(--mut);padding:4px 0 16px}
 </header>
 <div class="content">
   <div class="page-head">
-    <div><h1>Painel de Análise de Risco Rodoviário</h1><div class="sub">Visão geral dos acidentes em rodovias federais, Projeto Integrador UNIVESP</div></div>
+    <div><h1>Painel de Análise de Acidentes Rodoviários</h1><div class="sub">Visão geral dos acidentes em rodovias federais, Projeto Integrador UNIVESP</div></div>
     <div class="badge" id="bdg">DADOS PRF</div>
   </div>
   <div class="up"><div class="mdl" id="mdl">Carregando dados…</div></div>
@@ -65,11 +65,11 @@ footer{font-size:12px;color:var(--mut);padding:4px 0 16px}
   <div class="grid k">
     <div class="kpi" style="border-left-color:var(--navy)"><span>Total de ocorrências</span><b id="k1">–</b><div class="sub">Recorte selecionado</div></div>
     <div class="kpi" style="border-left-color:var(--red)"><span>Ocorrências graves</span><b id="k2">–</b><div class="sub" id="k2s">Óbitos ou feridos graves</div></div>
-    <div class="kpi" style="border-left-color:var(--amb)"><span>Risco previsto pelo modelo</span><b id="k3">–</b><div class="sub" id="k3s">Baixo • Médio • Alto</div></div>
+    <div class="kpi" style="border-left-color:var(--amb)"><span>Gravidade estimada pelo modelo</span><b id="k3">–</b><div class="sub" id="k3s">Faixa relativa: Baixo • Médio • Alto</div></div>
     <div class="kpi" style="border-left-color:var(--teal)"><span>Rodovias analisadas</span><b id="k4">–</b><div class="sub" id="k4s"></div></div>
   </div>
   <div class="grid r1">
-    <div class="card"><h2>Mapa de trechos (latitude/longitude)</h2><div class="sub">Trechos de 10 km • tamanho = volume, cor = risco do modelo</div>
+    <div class="card"><h2>Mapa de trechos (latitude/longitude)</h2><div class="sub">Trechos de 10 km • tamanho = volume, cor = faixa relativa de gravidade estimada</div>
       <svg id="map" viewBox="0 0 560 300" style="background:var(--map);border-radius:10px;margin-top:8px"></svg>
       <div class="leg"><span style="color:var(--grn)">● Baixo</span><span style="color:var(--amb)">● Médio</span><span style="color:var(--red)">● Alto</span></div></div>
     <div class="card"><h2>Ocorrências por faixa de horário</h2><div class="sub">Total no recorte</div><svg id="hrs" viewBox="0 0 300 220"></svg></div>
@@ -77,10 +77,16 @@ footer{font-size:12px;color:var(--mut);padding:4px 0 16px}
   <div class="grid"><div class="card"><h2>Trechos de atenção (detecção automática)</h2><div class="sub">Janelas de 25 km com concentração de acidentes bem acima da média da rodovia no recorte.</div><div class="rt" id="hot"></div></div></div>
   <div class="grid r2">
     <div class="card"><h2>Evolução das ocorrências</h2><div class="sub">Tendência mensal</div><svg id="evo" viewBox="0 0 300 160"></svg></div>
-    <div class="card"><h2>Gravidade por rodovia</h2><div class="sub">Barra = % de graves observado • cor = risco previsto</div><svg id="sev" viewBox="0 0 300 170"></svg></div>
-    <div class="card"><h2>Trechos de maior risco previsto</h2><div class="sub">Maior probabilidade de gravidade (modelo)</div><div id="top"></div></div>
+    <div class="card"><h2>Gravidade por rodovia</h2><div class="sub">Barra = % de graves observado • cor = gravidade estimada pelo modelo</div><svg id="sev" viewBox="0 0 300 170"></svg></div>
+    <div class="card"><h2>Trechos com maior gravidade estimada</h2><div class="sub">Maior probabilidade estimada de gravidade pelo modelo</div><div id="top"></div></div>
   </div>
-  <footer><span class="note" id="foot">Sem dados carregados.</span></footer>
+  <footer>
+    <span class="note" id="foot">Sem dados carregados.</span>
+    <div class="sub" style="margin-top:8px">
+      A estimativa do modelo representa a probabilidade de gravidade caso ocorra um acidente,
+      e não a probabilidade de ocorrência de um acidente durante a viagem.
+    </div>
+  </footer>
 </div>
 </main>
 <script>
@@ -103,7 +109,7 @@ function setData(rows,label){
   const a={};D.forEach(r=>{const k=tkey(r);(a[k]=a[k]||[0,0])[0]+=r.p;a[k][1]++});
   const v=Object.values(a).filter(x=>x[1]>=5).map(x=>x[0]/x[1]).sort((x,y)=>x-y);
   cut=v.length?[v[Math.floor(v.length*.33)],v[Math.floor(v.length*.66)]]:[.3,.6];
-  $('mdl').innerHTML=`Modelo <b>${esc(SRV.escolhido)}</b> (treinado no servidor, corte temporal) • AUC no teste: <b>${String(SRV.auc_teste[SRV.escolhido]).replace('.',',')}</b> • ${SRV.registros.toLocaleString('pt-BR')} acidentes de ${SRV.periodo[0]} a ${SRV.periodo[1]} • taxa base de graves ${pct(SRV.taxa_base_graves)}`;
+  $('mdl').innerHTML=`Modelo <b>${esc(SRV.escolhido)}</b> • treino: 2021–2024 • teste temporal: 2025 • AUC no teste: <b>${String(SRV.auc_teste[SRV.escolhido]).replace('.',',')}</b> • ${SRV.registros.toLocaleString('pt-BR')} acidentes de ${SRV.periodo[0]} a ${SRV.periodo[1]} • taxa base de graves ${pct(SRV.taxa_base_graves)}`;
   const count=(k,fn)=>Object.entries(D.reduce((o,r)=>(o[fn(r)]=(o[fn(r)]||0)+1,o),{})).sort((x,y)=>y[1]-x[1]).map(x=>x[0]);
   $('uf').innerHTML='<option value="">Todas</option>'+[...new Set(D.map(r=>r.uf))].sort().map(u=>`<option>${esc(u)}</option>`).join('');
   $('hw').innerHTML='<option value="">Todas</option>'+count(0,r=>r.br).slice(0,150).map(u=>`<option>${esc(u)}</option>`).join('');
@@ -122,7 +128,7 @@ function render(){
  const T2=Object.values(T).map(t=>({...t,p:t.sp/t.n,c:cls(t.sp/t.n)}));
  const avg=tot?rows.reduce((a,r)=>a+r.p,0)/tot:0;
  $('k1').textContent=tot.toLocaleString('pt-BR');$('k2').textContent=gr.toLocaleString('pt-BR');$('k2s').textContent=tot?pct(gr/tot)+' do total':'';
- $('k3').innerHTML=tot?`<i style="font-style:normal;color:${col(cls(avg))}">${cls(avg)}</i> ${pct(avg)}`:'–';$('k3s').textContent='P(grave) média prevista';
+ $('k3').innerHTML=tot?`<i style="font-style:normal;color:${col(cls(avg))}">${cls(avg)}</i> ${pct(avg)}`:'–';$('k3s').textContent='Probabilidade média estimada de gravidade';
  const hws=[...new Set(T2.map(t=>t.br))];$('k4').textContent=hws.length;$('k4s').textContent=T2.length+' trechos de 10 km';
  // mapa
  const G=T2.filter(t=>t.nl>0).map(t=>({...t,la:t.la/t.nl,lo:t.lo/t.nl}));
@@ -153,7 +159,7 @@ function render(){
   ok.forEach(c=>{const ms=rs.filter(r=>r.km>=c.st&&r.km<c.st+W),ks=ms.map(r=>r.km),k0=Math.floor(MN(ks)),k1=Math.max(k0+1,Math.ceil(MX(ks))),p=ms.reduce((a,r)=>a+r.p,0)/ms.length;
    hot.push({br:rs[0].br,k0,k1,uf:ms[0].uf,n:ms.length,m:ms.reduce((a,r)=>a+r.m,0),fe:ms.reduce((a,r)=>a+r.fe,0),x:ms.length/mu,z:c.z,p,c:cls(p)})})});
  hot.sort((a,b)=>b.z-a.z);
- $('hot').innerHTML=hot.slice(0,6).map(h=>`<div class="ro" style="cursor:default"><b>${esc(h.br)} — km ${h.k0}–${h.k1} (${esc(h.uf)})</b>${h.n} acidentes registrados<br>${h.m} acidentes com mortes<br>${h.fe} feridos<br>Concentração: <b style="display:inline">${h.x.toFixed(1).replace('.',',')}×</b> a média da rodovia<div class="sub">Risco previsto: <b style="display:inline;color:${col(h.c)}">${h.c}</b> · ${pct(h.p)}</div></div>`).join('')||'<div class="sub">Nenhuma concentração relevante no recorte.</div>';
+ $('hot').innerHTML=hot.slice(0,6).map(h=>`<div class="ro" style="cursor:default"><b>${esc(h.br)} — km ${h.k0}–${h.k1} (${esc(h.uf)})</b>${h.n} acidentes registrados<br>${h.m} acidentes com mortes<br>${h.fe} feridos<br>Concentração: <b style="display:inline">${h.x.toFixed(1).replace('.',',')}×</b> a média da rodovia<div class="sub">Gravidade estimada: <b style="display:inline;color:${col(h.c)}">${h.c}</b> · ${pct(h.p)}</div></div>`).join('')||'<div class="sub">Nenhuma concentração relevante no recorte.</div>';
  // trechos
  const top=T2.filter(t=>t.n>=5).sort((a,b)=>b.p-a.p).slice(0,5);
  $('top').innerHTML=top.map(t=>`<div class="row"><span class="dot" style="background:${col(t.c)}"></span>${esc(t.br)} km ${t.k0}–${t.k0+10} (${esc(t.uf)})<span class="tag" style="color:${col(t.c)}">${t.c} · ${pct(t.p)}</span></div>`).join('')||'<div class="sub">Sem trechos com 5+ ocorrências no recorte.</div>';

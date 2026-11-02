@@ -55,7 +55,7 @@
         {% if ped_ativo %}<label>Veículo (para o pedágio)</label><select id="cat">{% for k,v in categorias.items() %}<option value="{{k}}" {{ 'selected' if k=='carro' }}>{{v}}</option>{% endfor %}</select>{% endif %}
         <button id="go" class="btn-blue">Calcular rotas</button>
         <div id="res"></div>
-        <p class="sub" style="margin-top:18px">Modelo: <b>{{ info.escolhido }}</b> (AUC {{ info.auc_teste[info.escolhido] }} em teste temporal), {{ "{:,}".format(info.registros).replace(",",".") }} acidentes de {{ info.periodo[0] }} a {{ info.periodo[1] }}; as contagens por rota somam todo esse período. Tempo estimado sem considerar trânsito (OSRM).{% if ped_ativo %} Pedágio: valores por passagem e por categoria, só para as praças cadastradas na Base da ANTT ({{ ped_ufs }}); praças de outros estados e pedágios estaduais não entram no total.{% endif %} Mapa © OpenStreetMap.</p>
+        <p class="sub" style="margin-top:18px">Modelo: <b>{{ info.escolhido }}</b> (AUC {{ info.auc_teste[info.escolhido] }} em teste temporal), {{ "{:,}".format(info.registros).replace(",",".") }} acidentes de {{ info.periodo[0] }} a {{ info.periodo[1] }}; as contagens por rota somam todo esse período. Tempo estimado sem considerar trânsito (OSRM).{% if ped_ativo %} Pedágio: valores por passagem e por categoria, só para as praças cadastradas na Base da ANTT ({{ ped_ufs }}). Praças de outros estados e pedágios estaduais podem não estar contemplados no total, sendo a ampliação e atualização dessa base um ponto de melhoria para versões futuras da solução.{% endif %} Mapa © OpenStreetMap.</p>
     </section>
     <section class="panel mapbox"><div id="map"></div></section>
   </div>
@@ -101,7 +101,7 @@ function mostrar(){
       <div>
         <b>${brl(r.pedagio.total)}</b>
         <span>
-          Pedágio (${r.pedagio.n}
+          Pedágios identificados (${r.pedagio.n}
           ${r.pedagio.n == 1 ? 'praça' : 'praças'})
         </span>
       </div>
@@ -109,17 +109,17 @@ function mostrar(){
 
     <div>
       <b>${n1(k.ups_por_100km)}</b>
-      <span>Severidade histórica (UPS/100 km)</span>
+      <span>Severidade histórica (UPS/100 km, 2021–2025)</span>
     </div>
 
     <div>
       <b>${n1(k.acidentes_100km)}</b>
-      <span>Acidentes por 100 km</span>
+      <span>Acidentes históricos por 100 km (2021–2025)</span>
     </div>
 
     <div>
-      <b>${pct(k.p_grave_modelo)}</b>
-      <span>Probabilidade de gravidade (ML)</span>
+      <b>${pct(k.prob_gravidade_condicional)}</b>
+      <span>Gravidade condicional estimada (ML)</span>
     </div>
 
    </div>
@@ -129,8 +129,41 @@ function mostrar(){
     • ${k.feridos} feridos
     • UPS total ${k.ups}
    </div>
-   ${i==sel&&r.pedagio&&r.pedagio.n?'<div class="sub" style="margin-top:6px"><b>Praças no caminho:</b></div><ul>'+r.pedagio.pracas.map(p=>`<li>${esc(p.nome.replace('Pedágio ',''))} (${esc(p.rodovia)}/${esc(p.uf)}): ${p.preco==null?'sem valor':brl(p.preco)}</li>`).join('')+'</ul>':''}
-   ${i==sel&&k.trechos_criticos.length?'<ul>'+k.trechos_criticos.map(t=>`<li>BR-${esc(t.br)} (${esc(t.uf)}) km ${t.km_ini}–${t.km_fim}: ${t.acidentes} acidentes, ${t.mortes} mortos</li>`).join('')+'</ul>':''}</div>`}).join('');
+   <div class="sub">
+      A estimativa de ML representa a probabilidade de gravidade
+      condicionada à ocorrência de um acidente e não a probabilidade
+      de um acidente ocorrer durante a viagem.
+   </div>
+   ${i == sel && r.pedagio && r.pedagio.n ? `
+    <div class="sub" style="margin-top:8px">
+      <b>Praças identificadas no caminho:</b>
+    </div>
+    <ul>
+      ${r.pedagio.pracas.map(p => `
+        <li>
+          ${esc(p.nome.replace('Pedágio ',''))}
+          (${esc(p.rodovia)}/${esc(p.uf)}):
+          ${p.preco == null ? 'sem valor' : brl(p.preco)}
+        </li>
+      `).join('')}
+    </ul>
+  ` : ''}
+
+   ${i == sel && k.trechos_criticos.length ? `
+    <div class="sub" style="margin-top:8px">
+      <b>Trechos de atenção no corredor:</b>
+    </div>
+    <ul>
+      ${k.trechos_criticos.map(t => `
+        <li>
+          BR-${esc(t.br)} (${esc(t.uf)})
+          km ${t.km_ini}–${t.km_fim}:
+          ${t.acidentes} acidentes,
+          ${t.mortes} mortos
+        </li>
+      `).join('')}
+    </ul>
+  ` : ''}</div>`}).join('');
   document.querySelectorAll('.card').forEach(c=>c.onclick=()=>{sel=+c.dataset.i;mostrar()});desenhar();
 }
 function desenhar(){
